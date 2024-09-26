@@ -1,0 +1,47 @@
+<div class="bg-white rounded-lg shadow-xl p-6 max-w-md w-full mx-auto">
+  <div class="flex justify-center items-center mb-6">
+    <h1 class="text-2xl font-bold text-gray-800">Iniciar sesión</h1>
+  </div>
+
+  <form class="space-y-4">
+    <div class="relative">
+      <input [(ngModel)]="email" name="email" type="email" required
+             class="peer w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-800 placeholder-transparent"
+             placeholder="Correo electrónico">
+      <label class="absolute left-4 top-1  bg-white text-gray-600 transition-transform transform -translate-y-3 scale-75 origin-top-left peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:text-gray-800">
+        Correo electrónico
+      </label>
+      <mat-icon class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-800">email</mat-icon>
+    </div>
+
+    <div class="relative">
+      <input [(ngModel)]="password" name="password" [type]="hidePassword ? 'password' : 'text'" required
+             class="peer w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-800 placeholder-transparent"
+             placeholder="Contraseña">
+      <label class="absolute left-4 top-1 bg-white text-gray-600 transition-transform transform -translate-y-3 scale-75 origin-top-left peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:text-gray-800">
+        Contraseña
+      </label>
+      <button type="button" (click)="hidePassword = !hidePassword" 
+              class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-800 focus:outline-none">
+        <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+      </button>
+    </div>
+
+    <div class="flex justify-between items-center text-sm">
+      <label class="flex items-center space-x-2 text-gray-600">
+       
+      </label>
+      <a href="#" class="text-blue-600 hover:underline">¿Olvidaste tu contraseña?</a>
+    </div>
+
+    <button type="submit" (click)="onLogin()" 
+            class="w-full bg-gray-800 text-white py-2 px-4 rounded-md hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+      Iniciar sesión
+    </button>
+  </form>
+
+  <div class="mt-6 text-center text-sm text-gray-600">
+    ¿No tienes una cuenta? 
+    <button (click)="showRegister()" class="text-blue-600 hover:underline font-medium">Regístrate aquí</button>
+  </div>
+</div>

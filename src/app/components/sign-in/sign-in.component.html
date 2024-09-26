@@ -1,0 +1,71 @@
+<div class="min-h-screen bg-white flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+  <div class="sm:mx-auto sm:w-full sm:max-w-md">
+    <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-800">
+      Crea tu cuenta
+    </h2>
+  </div>
+
+  <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+    <div class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
+      <form class="space-y-6" (ngSubmit)="onRegister()">
+        
+        <div class="relative">
+          <input id="username" name="username" type="text" required
+                [(ngModel)]="user.username"
+                class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-transparent focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm peer"
+                placeholder="Nombre de usuario">
+          <label for="username" class="absolute left-4 top-2  bg-white text-gray-600 transition-transform transform -translate-y-3 scale-75 origin-top-left peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:text-gray-800">
+            Nombre de usuario
+          </label>
+        </div>
+
+        <div class="relative">
+          <input id="email" name="email" type="email" autocomplete="email" required
+                [(ngModel)]="user.email"
+                class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-transparent focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm peer"
+                placeholder="Correo electrónico">
+          <label for="email" class="absolute left-4 top-2  bg-white text-gray-600 transition-transform transform -translate-y-3 scale-75 origin-top-left peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:text-gray-800">
+            Correo electrónico
+          </label>
+        </div>
+
+        <div class="relative">
+          <input id="password" name="password" type="password" autocomplete="new-password" required
+                [(ngModel)]="user.password"
+                class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-transparent focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm peer"
+                placeholder="Contraseña">
+          <label for="password" class="absolute left-4 top-2  bg-white text-gray-600 transition-transform transform -translate-y-3 scale-75 origin-top-left peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:text-gray-800">
+            Contraseña
+          </label>
+        </div>
+
+        <div>
+          <button type="submit"
+                  class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-gray-800 hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+            Registrarse
+          </button>
+        </div>
+      </form>
+
+      <div class="mt-6">
+        <div class="relative">
+          <div class="absolute inset-0 flex items-center">
+            <div class="w-full border-t border-gray-300"></div>
+          </div>
+          <div class="relative flex justify-center text-sm">
+            <span class="px-2 bg-white text-gray-500">
+              ¿Ya tienes una cuenta?
+            </span>
+          </div>
+        </div>
+
+        <div class="mt-6">
+          <button (click)="goToLogin()"
+                  class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-gray-800 bg-white hover:bg-gray-300">
+            Iniciar sesión
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
