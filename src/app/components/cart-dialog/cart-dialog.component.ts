@@ -29,9 +29,9 @@ export class CartDialogComponent {
     },
     {
       imageUrl: 'https://images.unsplash.com/photo-1598965402089-897ce52e8355?q=80&w=1936&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-      title: 'Zapatillas 2',
+      title: 'Smartphone 2',
       price: 70.00,
-      description: 'Descripción de las zapatillas 2',
+      description: 'Descripción del Smartphone 2',
       quantity: 1
     }
   ];

@@ -1,37 +1,51 @@
 <div class="bg-gray-900 text-white min-h-screen">
-  <header class="p-4">
-    <nav class="flex justify-between items-center">
-      <div class="flex items-center">
-        <div class="text-4xl text-red-500 hover:text-red-400 font-bold mt-2">
-          Add to Cart
+  <header class="p-4 bg-gray-800 text-white">
+    <nav class="flex flex-col md:flex-row justify-between items-center">
+      <!-- Logo and Brand -->
+      <div class="flex items-center mb-4 md:mb-0">
+        <div class="text-2xl md:text-3xl text-red-500 hover:text-red-400 font-bold flex items-center">
+            <i class="fas fa-shopping-cart text-white mr-2"></i> <!-- Ícono del carrito en blanco -->
+            Add to Cart
         </div>
-        <i class="fas fa-shopping-cart text-4xl text-white  mt-2"></i>
-      </div>
-      <ul class="flex space-x-8 text-2xl mt-4 mr-16">
+    </div>
+  
+      <!-- Navigation Links -->
+      <ul class="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-6 text-base md:text-lg mb-4 md:mb-0">
         <li><a href="#" class="text-red-500 hover:text-red-400">Inicio</a></li>
         <li><a href="#about-home" class="hover:text-gray-300">Acerca de Nosotros</a></li>
         <li><a href="#products-home" class="hover:text-gray-300">Productos</a></li>
-        <li><a (click)="openLoginDialog()" class="hover:text-gray-300">Iniciar Sesión</a></li>
       </ul>
-      <div class="flex items-center space-x-4">
-        <svg 
-         
-          xmlns="http://www.w3.org/2000/svg" 
-          class="h-6 w-6 cursor-pointer hover:text-gray-300" 
-          fill="none" 
-          viewBox="0 0 24 24" 
-          stroke="currentColor">
-          <path 
-            stroke-linecap="round" 
-            stroke-linejoin="round" 
-            stroke-width="2" 
-            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+  
+      <!-- Search Bar -->
+      <div class="relative text-black w-full md:w-auto md:flex-grow md:mx-4 md:max-w-md mb-4 md:mb-0">
+        <input
+          type="text"
+          placeholder="Buscar..."
+          class="w-full pl-10 pr-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="absolute left-3 top-2.5 h-5 w-8 text-gray-500 cursor-pointer"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+          />
         </svg>
-        
+      </div>
+  
+      <!-- Login and Cart -->
+      <div class="flex items-center space-x-4">
+        <a (click)="openLoginDialog()" class="hover:text-gray-300 cursor-pointer">Iniciar Sesión</a>
         <svg 
           (click)="openCartDialog()" 
           xmlns="http://www.w3.org/2000/svg" 
-          class="h-6 w-6 cursor-pointer hover:text-gray-300" 
+          class="h-8 w-8 cursor-pointer hover:text-gray-300" 
           fill="none" 
           viewBox="0 0 24 24" 
           stroke="currentColor">
@@ -42,28 +56,24 @@
             d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
         </svg>
       </div>
-      
     </nav>
   </header>
-
   <main class="container mx-auto px-4 py-8">
-
     <section>
       <app-carrousel-home></app-carrousel-home>
     </section>
 
     <!-- Sección de productos -->
-    <section id="products-home">
+    <section id="products-home" class="my-8">
       <app-product-home></app-product-home>
     </section>
 
-    <section id ="about-home">
+    <section id="about-home" class="my-8">
       <app-about-home></app-about-home>
     </section>
 
-    <section id="contact-home">
+    <section id="contact-home" class="mt-8">
       <app-footer-home></app-footer-home>
     </section>
-    
   </main>
 </div>
