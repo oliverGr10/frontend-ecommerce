@@ -1,0 +1,79 @@
+<div class="container mx-auto font-sans p-6 bg-gray-50">
+  <div class="flex justify-between items-center mb-6">
+    <h1 class="text-2xl font-semibold">Suppliers</h1>
+    <div class="flex items-center">
+      <div class="relative mr-4">
+        <input type="text" placeholder="Search" class="pl-8 pr-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+        <svg class="w-4 h-4 absolute left-2.5 top-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+        </svg>
+      </div>
+      <button class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
+        Edit Suppliers
+      </button>
+    </div>
+  </div>
+
+  <div class="bg-white shadow-md rounded-lg overflow-hidden">
+    <table class="w-full">
+      <thead>
+        <tr class="bg-gray-50 text-left">
+          <th class="px-6 py-3 text-xs font-medium text-gray-500 uppercase">Supplier Name</th>
+          <th class="px-6 py-3 text-xs font-medium text-gray-500 uppercase">Email</th>
+          <th class="px-6 py-3 text-xs font-medium text-gray-500 uppercase">Contact No.</th>
+          <th class="px-6 py-3 text-xs font-medium text-gray-500 uppercase"></th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-gray-200">
+        <tr class="hover:bg-gray-50">
+          <td class="px-6 py-4 flex items-center">
+            <img src="https://logo.clearbit.com/apple.com" alt="Apple" class="w-6 h-6 mr-3 rounded-full">
+            <span>Apple</span>
+          </td>
+          <td class="px-6 py-4">apple.com</td>
+          <td class="px-6 py-4">+63 123 4243</td>
+          <td class="px-6 py-4 text-right">
+            <a href="#" class="text-blue-500 hover:underline">Order History</a>
+          </td>
+        </tr>
+        <tr class="hover:bg-gray-50">
+          <td class="px-6 py-4 flex items-center">
+            <img src="https://logo.clearbit.com/samsung.com" alt="Samsung" class="w-6 h-6 mr-3 rounded-full">
+            <span>Samsung</span>
+          </td>
+          <td class="px-6 py-4">samsungmail.com</td>
+          <td class="px-6 py-4">+63 133 5458</td>
+          <td class="px-6 py-4 text-right">
+            <a href="#" class="text-blue-500 hover:underline">Order History</a>
+          </td>
+        </tr>
+        <!-- Repite este patrón para los demás proveedores -->
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<style>
+  /* Estilos adicionales si son necesarios */
+  /* Puede que necesites ajustar algunos estilos para que coincidan exactamente con la imagen */
+</style>
+
+<!-- Comentarios:
+1. Las imágenes de los logos se obtienen de Clearbit. En una implementación real, 
+   deberías usar tus propias imágenes o un servicio de logos confiable.
+
+2. La tabla usa Tailwind CSS para los estilos. Ajusta los colores y tamaños según sea necesario 
+   para que coincidan exactamente con tu diseño.
+
+3. Para implementar la funcionalidad de búsqueda y edición de proveedores, necesitarás 
+   agregar lógica JavaScript/TypeScript en tu componente Angular.
+
+4. Los datos de los proveedores deberían venir de tu backend. Aquí solo se muestran dos 
+   ejemplos, pero deberías usar un ngFor para iterar sobre tu lista real de proveedores.
+
+5. El enlace "Order History" debería llevar a una página o modal con el historial de pedidos 
+   del proveedor correspondiente. Implementa esta navegación según la estructura de tu aplicación.
+
+6. Asegúrate de que la página sea responsive. La tabla puede necesitar ajustes para 
+   dispositivos móviles, como hacer scroll horizontal o apilar las columnas.
+-->

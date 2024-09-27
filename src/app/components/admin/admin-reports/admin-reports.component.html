@@ -1,0 +1,141 @@
+<div class="p-8 font-sans bg-gray-100">
+  <div class="flex justify-between items-center mb-6">
+    <h1 class="text-2xl font-semibold">Reports</h1>
+    <button class="bg-sky-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 flex items-center">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+        <path d="M4 0a2 2 0 00-2 2v2h-1a1 1 0 00-1 1v12a1 1 0 001 1h15a1 1 0 001-1V5a1 1 0 00-1-1h-1V2a2 2 0 00-2-2H4zm11 2v2H5V2h10zm1 7h-1a1 1 0 00-1 1v4H6v-4a1 1 0 00-1-1H4v-1h12v1zm-7 5h2v1a1 1 0 11-2 0v-1zM5 6h10v8H5V6zm1 1v1h8V7H6z"/>
+      </svg>
+      Print Reports
+    </button>
+  </div>
+
+  <!-- Weekly Sales Chart -->
+  <div class="bg-white p-6 rounded-lg shadow-md mb-8">
+    <div class="flex justify-between items-center mb-4">
+      <h2 class="text-xl font-semibold">Weekly Sales</h2>
+      <div class="flex items-center">
+        <button class="text-gray-400 hover:text-gray-600">&lt;</button>
+        <span class="mx-2 text-sm text-gray-600">Aug 19-25</span>
+        <button class="text-gray-400 hover:text-gray-600">&gt;</button>
+      </div>
+    </div>
+    <!-- Comentario: Aquí se necesita una librería de gráficos para el heatmap -->
+    <div class="h-64 relative">
+      <!-- Placeholder para el gráfico de calor -->
+      <div class="absolute inset-0 grid grid-cols-7 grid-rows-8 gap-1">
+        <!-- Aquí se generarían dinámicamente los rectángulos del heatmap -->
+        <!-- Ejemplo de un rectángulo: -->
+        <div class="bg-blue-300"></div>
+      </div>
+      <!-- Etiquetas de horas a la izquierda -->
+      <div class="absolute left-0 top-0 bottom-0 w-10 flex flex-col justify-between text-xs text-gray-500">
+        <span>09:00</span>
+        <span>12:00</span>
+        <span>15:00</span>
+        <span>18:00</span>
+      </div>
+      <!-- Etiquetas de días en la parte superior -->
+      <div class="absolute top-0 left-10 right-0 h-6 flex justify-between text-xs text-gray-500">
+        <span>Mon</span>
+        <span>Tue</span>
+        <span>Wed</span>
+        <span>Thu</span>
+        <span>Fri</span>
+        <span>Sat</span>
+        <span>Sun</span>
+      </div>
+    </div>
+    <div class="flex justify-center mt-4 space-x-4">
+      <span class="flex items-center"><span class="w-3 h-3 bg-blue-200 rounded-full mr-2"></span>0-500</span>
+      <span class="flex items-center"><span class="w-3 h-3 bg-blue-400 rounded-full mr-2"></span>501-1,000</span>
+      <span class="flex items-center"><span class="w-3 h-3 bg-blue-600 rounded-full mr-2"></span>1,001-5,000</span>
+    </div>
+  </div>
+
+  <!-- Supplier Performance Report -->
+  <div class="bg-white p-6 rounded-lg shadow-md">
+    <h2 class="text-xl font-semibold mb-4">
+      Supplier Performance Report <span class="text-[#5C6F88]">(Top 5 Suppliers)</span>
+    </h2>
+    <!-- Comentario: Aquí se necesita una librería de gráficos para las barras apiladas -->
+    <div class="h-64 relative">
+      <!-- Placeholder para el gráfico de barras apiladas -->
+      <div class="absolute inset-0 flex items-end">
+        <!-- Aquí se generarían dinámicamente las barras apiladas -->
+        <!-- Ejemplo de una barra apilada: -->
+        <div class="w-1/5 h-full flex flex-col justify-end">
+          <div class="h-1/2 bg-blue-500"></div>
+          <div class="h-1/4 bg-yellow-500"></div>
+          <div class="h-1/4 bg-pink-500"></div>
+        </div>
+      </div>
+      <!-- Etiquetas de proveedores a la izquierda -->
+      <div class="absolute left-0 top-0 bottom-0 w-20 flex flex-col justify-around text-sm text-gray-600">
+        <span>Apple</span>
+        <span>Samsung</span>
+        <span>Asus</span>
+        <span>Xiaomi</span>
+        <span>Logitech</span>
+      </div>
+    </div>
+    <div class="flex justify-center mt-4 space-x-4">
+      <span class="flex items-center"><span class="w-3 h-3 bg-blue-500 rounded-full mr-2"></span>Early</span>
+      <span class="flex items-center"><span class="w-3 h-3 bg-yellow-500 rounded-full mr-2"></span>On Time</span>
+      <span class="flex items-center"><span class="w-3 h-3 bg-pink-500 rounded-full mr-2"></span>Late</span>
+    </div>
+  </div>
+</div>
+
+<!-- Comentarios adicionales:
+1. Para el gráfico de calor (heatmap), se recomienda usar una librería como Chart.js o D3.js.
+   Ejemplo con Chart.js:
+   ```javascript
+   new Chart(ctx, {
+     type: 'heatmap',
+     data: {
+       datasets: [{
+         data: [
+           { x: 'Mon', y: '09:00', v: 150 },
+           { x: 'Mon', y: '12:00', v: 300 },
+           // ... más datos ...
+         ]
+       }]
+     },
+     options: {
+       plugins: {
+         legend: false
+       },
+       scales: {
+         x: { type: 'category' },
+         y: { type: 'category', reverse: true }
+       }
+     }
+   });
+   ```
+
+2. Para el gráfico de barras apiladas, también se puede usar Chart.js o D3.js.
+   Ejemplo con Chart.js:
+   ```javascript
+   new Chart(ctx, {
+     type: 'bar',
+     data: {
+       labels: ['Apple', 'Samsung', 'Asus', 'Xiaomi', 'Logitech'],
+       datasets: [
+         { label: 'Early', data: [65, 59, 80, 81, 56], backgroundColor: '#3B82F6' },
+         { label: 'On Time', data: [28, 48, 40, 19, 86], backgroundColor: '#EAB308' },
+         { label: 'Late', data: [7, 14, 20, 10, 18], backgroundColor: '#EC4899' }
+       ]
+     },
+     options: {
+       scales: {
+         x: { stacked: true },
+         y: { stacked: true }
+       }
+     }
+   });
+   ```
+
+3. Asegúrate de ajustar los colores y estilos exactamente según el diseño proporcionado.
+4. Los datos mostrados son de ejemplo. Deberás reemplazarlos con datos reales de tu aplicación.
+5. La interactividad (como los botones de navegación en el gráfico de ventas semanales) requerirá lógica adicional en el componente.
+-->

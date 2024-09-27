@@ -1,0 +1,68 @@
+<!-- Contenedor principal con padding y ancho máximo -->
+<div class="container mx-auto p-6">
+  <!-- Cabecera con título y controles -->
+  <div class="flex justify-between items-center mb-6">
+    <!-- Título del inventario -->
+    <h1 class="text-2xl font-sans font-bold">Inventory</h1>
+    
+    <!-- Contenedor para la barra de búsqueda y el botón de añadir -->
+    <div class="flex items-center">
+      <!-- Barra de búsqueda con icono -->
+      <div class="relative mr-4">
+        <input type="text" placeholder="Search" class="pl-8 pr-3 font-sans py-2 border rounded-md w-64">
+        <!-- Icono de búsqueda (se requiere un icono SVG o una librería de iconos) -->
+        <svg class="w-5 h-5 absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+        </svg>
+      </div>
+      
+      <!-- Botón para añadir nuevo producto -->
+      <button class="bg-blue-500 font-sans text-white px-4 py-2 rounded-md">
+        Add New Product
+      </button>
+    </div>
+  </div>
+
+  <!-- Contenedor de la lista de productos con borde y sombra -->
+  <div class="bg-white rounded-lg shadow-md overflow-hidden border border-gray-200">
+    <!-- Título de la sección de lista de productos -->
+    <h2 class="text-lg font-sans font-semibold p-4 bg-gray-50 border-b border-gray-200">Product List</h2>
+    
+    <!-- Tabla de productos -->
+    <table class="w-full">
+      <!-- Encabezados de la tabla -->
+      <thead class="bg-gray-50">
+        <tr>
+          <th class="px-6 py-3 w-10">
+            <input type="checkbox" class="form-checkbox h-5 w-5 text-blue-600">
+          </th>
+          <th class="px-6 py-3 text-left text-xs font-sans font-medium text-gray-500 uppercase tracking-wider">Name</th>
+          <th class="px-6 py-3 text-left text-xs font-sans font-medium text-gray-500 uppercase tracking-wider">Code</th>
+          <th class="px-6 py-3 text-left text-xs font-sans font-medium text-gray-500 uppercase tracking-wider">Type</th>
+          <th class="px-6 py-3 text-left text-xs font-sans font-medium text-gray-500 uppercase tracking-wider">Price</th>
+          <th class="px-6 py-3 text-left text-xs font-sans font-medium text-gray-500 uppercase tracking-wider">Quantity</th>
+          <th class="px-6 py-3 text-left text-xs font-sans font-medium text-gray-500 uppercase tracking-wider">Image</th>
+        </tr>
+      </thead>
+      <!-- Cuerpo de la tabla -->
+      <tbody class="bg-white divide-y divide-gray-200">
+        <!-- Fila de ejemplo (repetir para cada producto) -->
+         
+        <tr class="hover:bg-gray-50">
+          <td class="px-6 py-4 whitespace-nowrap">
+            <input type="checkbox" class="form-checkbox h-5 w-5 text-blue-600">
+          </td>
+          <td class="px-6 py-4 font-sans whitespace-nowrap">Macbook Pro</td>
+          <td class="px-6 py-4 font-sans whitespace-nowrap">#0001</td>
+          <td class="px-6 py-4 font-sans whitespace-nowrap">Laptop</td>
+          <td class="px-6 py-4 font-sans whitespace-nowrap">$ 1,241</td>
+          <td class="px-6 py-4 font-sans whitespace-nowrap">44</td>
+          <td class="px-6 py-4 font-sans whitespace-nowrap">
+            <img src="path_to_macbook_image.jpg" alt="Macbook Pro" class="h-10 w-10 rounded-md object-cover">
+          </td>
+        </tr>
+        <!-- Repetir la estructura de la fila para cada producto en la lista -->
+      </tbody>
+    </table>
+  </div>
+</div>
