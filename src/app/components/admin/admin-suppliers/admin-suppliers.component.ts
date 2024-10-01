@@ -4,6 +4,7 @@ import { AddSuppliersComponent } from '../add-suppliers/add-suppliers.component'
 import { EditSupplierSheetComponent } from '../edit-supplier-sheet/edit-supplier-sheet.component';
 import { DeleteSupplierSheetComponent } from '../delete-supplier-sheet/delete-supplier-sheet.component';
 import { HistorySupplierSheetComponent } from '../history-supplier-sheet/history-supplier-sheet.component';
+import { EditProductIventorySheetComponent } from '../edit-product-iventory-sheet/edit-product-iventory-sheet.component';
 
 @Component({
   selector: 'app-admin-suppliers',
@@ -35,7 +36,7 @@ export class AdminSuppliersComponent {
     this.dialog.open(HistorySupplierSheetComponent,{
       width:'400px'
     });
-    
   }
+
 
 }

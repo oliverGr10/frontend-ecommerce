@@ -1,0 +1,55 @@
+<div class="fixed inset-0 bg-gray-600 bg-opacity-75 flex items-center justify-center overflow-y-auto h-full w-full" id="my-modal">
+    <!-- Contenedor del modal centrado -->
+    <div class="relative mx-auto p-6 border w-full max-w-md shadow-lg rounded-lg bg-white">
+        <!-- Título del modal con el ID del pedido -->
+        <div class="mb-4">
+            <h3 class="text-2xl font-bold text-gray-900">Detalles del Pedido #{{ order?.id }}</h3>
+            <!-- Botón para cerrar el modal -->
+            <button (click)="close.emit()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600">
+                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+        </div>
+        <div class="space-y-4">
+            <!-- Información básica del pedido -->
+            <div class="bg-gray-50 p-4 rounded-lg">
+                <p class="text-sm text-gray-600">
+                    <span class="font-medium text-gray-800">Cliente:</span> {{ order?.usuario_id }}<br>
+                    <span class="font-medium text-gray-800">Fecha:</span> {{ order?.fecha_orden | date:'medium' }}<br>
+                    <span class="font-medium text-gray-800">Estado:</span> 
+                    <!-- Color del estado basado en el valor -->
+                    <span [ngClass]="{
+                        'text-green-600': order?.estado === 'Completado',
+                        'text-yellow-600': order?.estado === 'En Proceso',
+                        'text-red-600': order?.estado === 'Cancelado'
+                    }">{{ order?.estado }}</span><br>
+                    <span class="font-medium text-gray-800">Total:</span> 
+                    <span class="text-lg font-bold text-[#052339]">${{ order?.total | number:'1.2-2' }}</span>
+                </p>
+            </div>
+            <div>
+                <h4 class="font-bold text-lg text-gray-800 mb-2">Productos:</h4>
+                <!-- Lista de productos en el pedido -->
+                <ul class="space-y-2">
+                    <li *ngFor="let detail of orderDetails" class="bg-gray-50 p-3 rounded-md flex justify-between items-center">
+                        <span class="text-sm text-gray-600">{{ detail.producto_id }}</span>
+                        <div class="text-right">
+                            <span class="text-sm font-medium text-gray-800">Cantidad: {{ detail.cantidad }}</span><br>
+                            <span class="text-sm text-gray-600">Precio: ${{ detail.precio_unitario | number:'1.2-2' }}</span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="mt-6">
+            <!-- Botón para cerrar el modal -->
+            <button
+                (click)="close.emit()"
+                class="w-full px-4 py-2 bg-[#052339] text-white text-base font-medium rounded-md shadow-sm hover:bg-[#06B6D4] focus:outline-none focus:ring-2 focus:ring-blue-300 transition duration-150 ease-in-out"
+            >
+                Cerrar
+            </button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,100 @@
+<!-- Contenedor del sheet lateral -->
+<div class="fixed inset-y-0 font-sans right-0 w-1/3 bg-white shadow-lg z-50 overflow-y-auto transition-transform transform translate-x-0" id="productSheet">
+    <!-- Botón para cerrar -->
+    <div class="p-4 flex justify-between items-center border-b">
+        <h2 class="text-xl font-bold">Agregar Nuevo Producto</h2>
+        <button (click)="cerrarHoja($event)" class="text-gray-500 hover:text-gray-700 focus:outline-none" id="closeButton">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+        </button>
+    </div>
+
+    <!-- Formulario -->
+    <form class="p-6 space-y-6">
+        <div class="relative">
+            <input name="nombre" id="nombre" placeholder=" " class="peer w-full px-4 py-2 border border-[#1E293B] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#052339] placeholder-transparent">
+            <label class="absolute left-4 top-1 bg-white text-gray-600 transition-transform transform -translate-y-3 scale-75 origin-top-left peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:text-gray-800">
+                Nombre del Producto
+            </label>
+        </div>
+
+        <div class="relative">
+            <textarea name="descripcion" id="descripcion" placeholder=" " rows="4" class="peer mt-2 w-full px-4 py-2 border border-[#1E293B] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#052339] placeholder-transparent"></textarea>
+            <label class="absolute left-4 top-1 bg-white text-gray-600 transition-transform transform -translate-y-3 scale-75 origin-top-left peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:text-gray-800 mt-2">
+                Descripción
+            </label>
+        </div>
+
+        <div class="grid grid-cols-2 gap-4">
+            <div class="relative">
+                <label for="precio" class="block text-sm font-semibold text-gray-600">Precio</label>
+                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <span class="text-gray-500 mt-7">$</span>
+                </div>
+                <input name="precio" id="precio" type="text" placeholder="120.00"
+                       class="mt-2 block w-full pl-7 pr-2 border border-[#1E293B] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#052339]">
+            </div>
+
+            <div class="relative">
+                <label for="categoria_id" class="block text-sm font-semibold text-gray-600">Categoría</label>
+                <select name="categoria_id" id="categoria_id" class="mt-2 block w-full rounded-lg border-[#1E293B] focus:outline-none focus:ring-2 focus:ring-[#052339]">
+                    <option value="">Seleccionar categoría</option>
+                    <option value="1">Laptops</option>
+                    <option value="2">Smartphones</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-4">
+            <div class="relative">
+                <label for="proveedor_id" class="block text-sm font-semibold text-gray-600">Proveedor</label>
+                <select name="proveedor_id" id="proveedor_id" class="mt-2 block w-full rounded-lg border-[#1E293B] focus:outline-none focus:ring-2 focus:ring-[#052339]">
+                    <option value="">Seleccionar proveedor</option>
+                    <option value="1">Apple</option>
+                    <option value="2">Samsung</option>
+                </select>
+            </div>
+            <div class="relative">
+                <label for="sku" class="block text-sm font-semibold text-gray-600">SKU</label>
+                <input name="sku" id="sku" placeholder="MBP-M2-2023 " class="mt-2 block w-full px-4 py-2 border border-[#1E293B] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#052339]">
+            </div>
+        </div>
+
+        <!-- Campo para arrastrar imagen -->
+        <div class="border-2 border-dashed border-gray-300 rounded-lg p-6 flex items-center justify-center cursor-pointer">
+            <input type="file" id="imagen_url" class="hidden" accept="image/*">
+            <div class="text-center">
+                <!-- Ícono de imagen -->
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-12 h-12 mx-auto mb-2 text-gray-400">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M16 12.498a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M21 12.75V6a2.25 2.25 0 00-2.25-2.25H5.25A2.25 2.25 0 003 6v6.75M21 12.75l-5.25 5.25m0 0L15 21m5.25-5.25h-5.25V6h5.25a2.25 2.25 0 012.25 2.25v8.25zM3 6l5.25 5.25M3 12.75h5.25m0 0L3 21h12m0-8.25H3" />
+                </svg>
+                <p class="text-gray-600">Arrastra tu imagen aquí o haz clic para subir</p>
+            </div>
+        </div>
+        
+
+        <div class="grid grid-cols-3 gap-4">
+            <div class="relative">
+                <label for="cantidad" class="block text-sm font-semibold text-gray-600">Cantidad Inicial</label>
+                <input name="cantidad" id="cantidad" type="number" placeholder="20"
+                       class="mt-2 block w-full px-4 py-2 border border-[#1E293B] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#052339]">
+            </div>
+            <div class="relative">
+                <label for="ubicacion" class="block text-sm font-semibold text-gray-600">Ubicación</label>
+                <input name="ubicacion" id="ubicacion" placeholder="Almacen Samsung"
+                       class="mt-2 block w-full px-4 py-2 border border-[#1E293B] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#052339]">
+            </div>
+            <div class="relative">
+                <label for="nivel_minimo" class="block text-sm font-semibold text-gray-600">Nivel Mínimo</label>
+                <input name="nivel_minimo" id="nivel_minimo" type="number" placeholder="2"
+                       class="mt-2 block w-full px-4 py-2 border border-[#1E293B] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#052339]">
+            </div>
+        </div>
+
+        <button type="submit" class="w-full bg-[#1E293B] text-white font-bold py-2 rounded-lg hover:bg-[#052339]">
+            Guardar Producto
+        </button>
+    </form>
+</div>

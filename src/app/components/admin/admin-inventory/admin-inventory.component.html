@@ -1,5 +1,5 @@
 <!-- Contenedor principal con padding y ancho máximo -->
-<div class="container mx-auto p-6">
+<div class="container font-sans mx-auto p-6">
   <!-- Cabecera con título y controles -->
   <div class="flex justify-between items-center mb-6">
     <!-- Título del inventario -->
@@ -17,21 +17,20 @@
       </div>
       
       <!-- Botón para añadir nuevo producto -->
-    <button class="bg-gray-900 hover:bg-gray-700 font-sans text-white px-4 py-2 rounded-md flex items-center">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor"    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="12" y1="5" x2="12" y2="19" />
-            <line x1="5" y1="12" x2="19" y2="12" />
-          </svg>
-            Add New Product
-    </button>
-
+      <button (click)="openAddProductSheet()" class="bg-[#1E293B] hover:bg-[#052339] font-sans text-white px-4 py-2 rounded-md flex items-center">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="12" y1="5" x2="12" y2="19" />
+          <line x1="5" y1="12" x2="19" y2="12" />
+        </svg>
+        Add New Product
+      </button>
     </div>
   </div>
 
   <!-- Contenedor de la lista de productos con borde y sombra -->
   <div class="bg-white rounded-lg shadow-md overflow-hidden border border-gray-200">
     <!-- Título de la sección de lista de productos -->
-    <h2 class="text-lg font-sans font-semibold p-4 bg-gray-50 border-b border-gray-200">Product List</h2>
+    <h2 class="text-lg text-white font-sans font-semibold p-4 bg-[#1E293B] border-b border-gray-200">Product List</h2>
     
     <!-- Tabla de productos -->
     <table class="w-full">
@@ -39,7 +38,7 @@
       <thead class="bg-gray-50">
         <tr>
           <th class="px-6 py-3 w-10">
-            <input type="checkbox" class="form-checkbox h-5 w-5 text-blue-600">
+            <input type="checkbox" class="form-checkbox h-5 w-5 text-[#052339]">
           </th>
           <th class="px-6 py-3 text-left text-xs font-sans font-medium text-gray-500 uppercase tracking-wider">Name</th>
           <th class="px-6 py-3 text-left text-xs font-sans font-medium text-gray-500 uppercase tracking-wider">Code</th>
@@ -47,15 +46,16 @@
           <th class="px-6 py-3 text-left text-xs font-sans font-medium text-gray-500 uppercase tracking-wider">Price</th>
           <th class="px-6 py-3 text-left text-xs font-sans font-medium text-gray-500 uppercase tracking-wider">Quantity</th>
           <th class="px-6 py-3 text-left text-xs font-sans font-medium text-gray-500 uppercase tracking-wider">Image</th>
+          <!-- Columna para acciones (editar/eliminar) -->
+          <th class="px-6 py-3 text-left text-xs font-sans font-medium text-gray-500 uppercase tracking-wider">Actions</th>
         </tr>
       </thead>
       <!-- Cuerpo de la tabla -->
       <tbody class="bg-white divide-y divide-gray-200">
         <!-- Fila de ejemplo (repetir para cada producto) -->
-         
         <tr class="hover:bg-gray-50">
           <td class="px-6 py-4 whitespace-nowrap">
-            <input type="checkbox" class="form-checkbox h-5 w-5 text-blue-600">
+            <input type="checkbox" class="form-checkbox h-5 w-5 text-[#052339]">
           </td>
           <td class="px-6 py-4 font-sans whitespace-nowrap">Macbook Pro</td>
           <td class="px-6 py-4 font-sans whitespace-nowrap">#0001</td>
@@ -63,7 +63,23 @@
           <td class="px-6 py-4 font-sans whitespace-nowrap">$ 1,241</td>
           <td class="px-6 py-4 font-sans whitespace-nowrap">44</td>
           <td class="px-6 py-4 font-sans whitespace-nowrap">
-            <img src="path_to_macbook_image.jpg" alt="Macbook Pro" class="h-10 w-10 rounded-md object-cover">
+            <img src="https://plus.unsplash.com/premium_photo-1671247953201-2fdc17af6692?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Macbook Pro" class="h-10 w-10 rounded-md object-cover">
+          </td>
+          <!-- Columna para los botones de editar/eliminar -->
+          <td class="px-6 py-4 whitespace-nowrap">
+            <!-- Botón para editar producto -->
+            <button (click)="openEditProductSheet()" class="text-black hover:text-blue-800 mr-4">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793z" />
+                <path d="M11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
+              </svg>
+            </button>
+            <!-- Botón para eliminar producto -->
+            <button (click)="openDeleteProductSheet()" class="text-black hover:text-red-800">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd" />
+              </svg>
+            </button>
           </td>
         </tr>
         <!-- Repetir la estructura de la fila para cada producto en la lista -->
