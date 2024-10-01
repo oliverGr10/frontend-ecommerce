@@ -1,0 +1,4 @@
+.active-link {
+    @apply bg-gray-600 text-white; /* Fondo oscuro y texto blanco para la opción seleccionada */
+  }
+  

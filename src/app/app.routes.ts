@@ -9,6 +9,11 @@ import { AdminInventoryComponent } from './components/admin/admin-inventory/admi
 import { AdminSalesComponent } from './components/admin/admin-sales/admin-sales.component';
 import { AdminSuppliersComponent } from './components/admin/admin-suppliers/admin-suppliers.component';
 import { AdminReportsComponent } from './components/admin/admin-reports/admin-reports.component';
+import { UserLayoutComponent } from './layouts/user-layout/user-layout.component';
+import { ProductListComponent } from './user/product-list/product-list.component';
+import { ProductDetailComponent } from './user/product-detail/product-detail.component';
+import { ShoppingCartComponent } from './user/shopping-cart/shopping-cart.component';
+import { UserProfileComponent } from './user/user-profile/user-profile.component';
 
 
 
@@ -19,6 +24,16 @@ export const routes: Routes = [
     {path:'home',component:HomePageComponent },
     {path:'dashboard', component:DashboardComponent},
     {path:'signIn',component:SignInComponent},
+    {
+      path: 'dashboard-user',
+      component: UserLayoutComponent,
+      children: [
+        { path: 'products', component: ProductListComponent },
+        { path: 'products/:id', component: ProductDetailComponent },
+        { path: 'cart', component: ShoppingCartComponent},
+        { path: 'profile', component: UserProfileComponent }
+      ]
+    },
     {
         path: 'admin',
         component: AdminLayoutComponent,

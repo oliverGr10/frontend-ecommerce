@@ -31,7 +31,7 @@ export class LoginComponent {
       // Aquí puedes agregar la lógica de autenticación
     // Si la autenticación es exitosa, puedes cerrar el diálogo y navegar
      this.dialogRef.close();
-    this.router.navigate(['/dashboard']);
+    this.router.navigate(['/dashboard-user']);
   }
 
   showRegister(): void {

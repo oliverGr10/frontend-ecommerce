@@ -1,0 +1,78 @@
+<div class="fixed  inset-0 font-sans overflow-hidden z-50" aria-labelledby="slide-over-title" role="dialog" aria-modal="true">
+    <div class="absolute inset-0 overflow-hidden">
+      <div class="absolute inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
+      <div class="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10">
+        <div class="pointer-events-auto relative w-screen max-w-2xl">
+          <div class="flex h-full flex-col overflow-y-scroll bg-white shadow-xl">
+            <div class="px-4 sm:px-6 py-6 bg-gray-50">
+              <div class="flex items-start justify-between">
+                <h2 class="text-2xl font-semibold text-gray-900" id="slide-over-title">Historial de Proveedor</h2>
+                <div class="ml-3 flex h-7 items-center">
+                  <button (click)="cancel()" class="rounded-md bg-gray-50 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                    <span class="sr-only">Cerrar panel</span>
+                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+              <p class="mt-1 text-sm text-gray-500">
+                Detalles del proveedor: {{ proveedor?.nombre || 'Información no disponible' }}
+              </p>
+            </div>
+            
+            <div class="flex-1 py-6 px-4 sm:px-6">
+              <div class="flex flex-col h-full">
+                <h3 class="text-lg font-medium text-gray-900 mb-4">Historial de Pedidos</h3>
+                
+                <div class="flex flex-col space-y-4 overflow-y-auto flex-grow">
+                  <div *ngFor="let pedido of historialPedidos" class="bg-white shadow overflow-hidden sm:rounded-lg">
+                    <div class="px-4 py-5 sm:px-6 flex justify-between items-center">
+                      <h4 class="text-lg font-medium text-gray-900">
+                        Pedido #{{ pedido.id }}
+                      </h4>
+                      <span [ngClass]="{
+                        'bg-green-100 text-green-800': pedido.estado === 'Completado',
+                        'bg-yellow-100 text-yellow-800': pedido.estado === 'En proceso',
+                        'bg-red-100 text-red-800': pedido.estado === 'Cancelado'
+                      }" class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full">
+                        {{ pedido.estado }}
+                      </span>
+                    </div>
+                    <div class="border-t border-gray-200 px-4 py-5 sm:px-6">
+                      <dl class="grid grid-cols-1 gap-x-4 gap-y-4 sm:grid-cols-2">
+                        <div class="sm:col-span-1">
+                          <dt class="text-sm font-medium text-gray-500">Fecha</dt>
+                          <dd class="mt-1 text-sm text-gray-900">{{ pedido.fecha | date:'dd/MM/yyyy' }}</dd>
+                        </div>
+                        <div class="sm:col-span-1">
+                          <dt class="text-sm font-medium text-gray-500">Total del Pedido</dt>
+                          <dd class="mt-1 text-sm text-gray-900">{{ pedido.total | currency:'USD':'symbol':'1.2-2' }}</dd>
+                        </div>
+                        <div class="sm:col-span-2">
+                          <dt class="text-sm font-medium text-gray-500">Productos Suministrados</dt>
+                          <dd class="mt-1 text-sm text-gray-900">
+                            <ul class="border border-gray-200 rounded-md divide-y divide-gray-200">
+                              <li *ngFor="let producto of pedido.productos" class="pl-3 pr-4 py-3 flex items-center justify-between text-sm">
+                                <div class="w-0 flex-1 flex items-center">
+                                  <span class="ml-2 flex-1 w-0 truncate">{{ producto.nombre }}</span>
+                                </div>
+                                <div class="ml-4 flex-shrink-0 flex space-x-4">
+                                  <span>{{ producto.cantidad }} unidades</span>
+                                  <span>{{ producto.precio | currency:'USD':'symbol':'1.2-2' }} / unidad</span>
+                                </div>
+                              </li>
+                            </ul>
+                          </dd>
+                        </div>
+                      </dl>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
