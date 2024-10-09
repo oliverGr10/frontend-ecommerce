@@ -15,32 +15,47 @@ import { MatIconModule } from '@angular/material/icon';
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
-  email: string = '';
-  password: string = '';
-  hidePassword: boolean = true;
+    email: string = '';
+    password: string = '';
+    hidePassword: boolean = true;
 
-  constructor(private router: Router, private dialogRef: MatDialogRef<LoginComponent>) {}
+    constructor(private router: Router,private dialogRef: MatDialogRef<LoginComponent>) {}
+  
+    onLogin(): void {
+      // Simulación de inicio de sesión
+      console.log('Iniciando sesión con:', this.email, this.password);
+      
+      // Aquí puedes agregar lógica real más adelante.
 
-  onClose(): void {
-    this.dialogRef.close();
-  }
+      /*const dialogRef = this.dialog.open(LoginComponent, {
+    width: '350px',
+  });
 
-  onLogin(): void {
-    // Implementar lógica de inicio de sesión
-    console.log('Iniciando sesión con:', this.email, this.password);
-      // Aquí puedes agregar la lógica de autenticación
-    // Si la autenticación es exitosa, puedes cerrar el diálogo y navegar
-     this.dialogRef.close();
-    this.router.navigate(['/dashboard-user']);
-  }
+  dialogRef.afterClosed().subscribe(result => {
+    if (result) {
+      this.isLoggedIn = true; // Cambia a true si el usuario inicia sesión
+    }
+  }); */
+  
+      // Cierra el diálogo y devuelve true para indicar que se inició sesión
+      this.dialogRef.close(true);
+      /*
+      this.dialogRef.close();
+      this.router.navigate(['/dashboard-user']);
+      */
+    }
+  
+    onClose(): void {
+      this.dialogRef.close();
+    }
 
-  showRegister(): void {
-    // Implementar lógica para mostrar el formulario de registro
-    console.log('Navegando a la página de registro...');
-    this.dialogRef.close();
-    
-    this.router.navigate(['/signIn'])
-    .then(() => console.log('Navegación a registro exitosa'))
-    .catch(err => console.error('Error al navegar a registro:', err)); // Captura errores en la navegación
-  }
+    showRegister(): void {
+      // Implementar lógica para mostrar el formulario de registro
+      console.log('Navegando a la página de registro...');
+      this.dialogRef.close();
+      
+      this.router.navigate(['/signIn'])
+      .then(() => console.log('Navegación a registro exitosa'))
+      .catch(err => console.error('Error al navegar a registro:', err)); // Captura errores en la navegación
+    }
 }

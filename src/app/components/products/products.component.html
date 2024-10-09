@@ -1,0 +1,62 @@
+<div class="bg-gray-900 text-white min-h-screen">
+    <header class="p-4 bg-gray-800 text-white">
+      <nav class="flex justify-between items-center">
+        <div class="text-2xl md:text-3xl text-red-500 hover:text-red-400 font-bold flex items-center">
+          <i class="fas fa-shopping-cart text-white mr-2"></i>
+          Add to Cart
+        </div>
+        <ul class="flex space-x-4">
+          <li><a routerLink="/home" class="hover:text-gray-300">Inicio</a></li>
+          <li><a routerLink="/productos" class="hover:text-gray-300">Productos</a></li>
+        </ul>
+      </nav>
+    </header>
+  
+    <main class="container mx-auto px-4 py-8">
+      <h2 class="text-2xl font-bold mb-6">Categorías</h2>
+      <div class="grid grid-cols-3 gap-4">
+        <div class="relative group bg-gray-800 p-4 rounded-lg text-center">
+          <h3 class="font-bold">Hogar</h3>
+          <!-- Subcategorías de Hogar -->
+          <ul class="absolute hidden group-hover:block bg-gray-700 p-2 rounded-lg mt-2 w-full">
+            <li class="hover:bg-gray-600 p-2"><a href="#">Muebles</a></li>
+            <li class="hover:bg-gray-600 p-2"><a href="#">Decoración</a></li>
+            <li class="hover:bg-gray-600 p-2"><a href="#">Cocina</a></li>
+          </ul>
+        </div>
+      
+        <div class="relative group bg-gray-800 p-4 rounded-lg text-center">
+          <h3 class="font-bold">Electrónica</h3>
+          <!-- Subcategorías de Electrónica -->
+          <ul class="absolute hidden group-hover:block bg-gray-700 p-2 rounded-lg mt-2 w-full">
+            <li class="hover:bg-gray-600 p-2"><a href="#">Televisores</a></li>
+            <li class="hover:bg-gray-600 p-2"><a href="#">Computadoras</a></li>
+            <li class="hover:bg-gray-600 p-2"><a href="#">Teléfonos</a></li>
+          </ul>
+        </div>
+      
+        <div class="relative group bg-gray-800 p-4 rounded-lg text-center">
+          <h3 class="font-bold">Ropa</h3>
+          <!-- Subcategorías de Ropa -->
+          <ul class="absolute hidden group-hover:block bg-gray-700 p-2 rounded-lg mt-2 w-full">
+            <li class="hover:bg-gray-600 p-2"><a href="#">Camisetas</a></li>
+            <li class="hover:bg-gray-600 p-2"><a href="#">Pantalones</a></li>
+            <li class="hover:bg-gray-600 p-2"><a href="#">Zapatos</a></li>
+          </ul>
+        </div>
+      </div>
+      
+  
+      <h2 class="text-2xl font-bold mt-8 mb-6">Productos</h2>
+      <div class="grid grid-cols-3 gap-4">
+        <div *ngFor="let product of products" class="bg-white p-4 rounded-lg shadow">
+          <img [src]="product.image" alt="{{ product.name }}" class="w-full h-48 object-cover mb-4">
+          <h3>{{ product.name }}</h3>
+          <p>${{ product.price }}</p>
+        </div>
+      </div>
+    </main>
+  </div>
+  
+  
+  

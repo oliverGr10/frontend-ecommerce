@@ -1,0 +1,13 @@
+.user-icons a {
+    margin-right: 15px;
+    color: white;
+  }
+  
+  .user-icons a:hover {
+    color: #ccc;
+  }
+  
+  .user-icons i {
+    font-size: 20px;
+  }
+  

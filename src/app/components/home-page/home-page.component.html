@@ -13,7 +13,7 @@
       <ul class="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-6 text-base md:text-lg mb-4 md:mb-0">
         <li><a href="#" class="text-red-500 hover:text-red-400">Inicio</a></li>
         <li><a href="#about-home" class="hover:text-gray-300">Sobre Nosotros</a></li>
-        <li><a href="#products-home" class="hover:text-gray-300">Productos</a></li>
+        <li><a routerLink="/productos" class="hover:text-gray-300">Productos</a></li>
       </ul>
   
       <!-- Search Bar -->
@@ -41,7 +41,17 @@
   
       <!-- Login and Cart -->
       <div class="flex items-center space-x-4">
-        <a (click)="openLoginDialog()" class="hover:text-gray-300 cursor-pointer">Iniciar Sesión</a>
+        <a *ngIf="!isLoggedIn" (click)="openLoginDialog()" class="hover:text-gray-300 cursor-pointer">Iniciar Sesión</a>
+
+  <!-- Mostrar iconos útiles tras autenticación -->
+      <div *ngIf="isLoggedIn" class="flex items-center space-x-4">
+        <a routerLink="/profile" class="hover:text-gray-300">
+          <i class="fas fa-user text-2xl"></i> <!-- Icono de perfil -->
+        </a>
+        <a routerLink="/orders" class="hover:text-gray-300">
+          <i class="fas fa-box text-2xl"></i> <!-- Icono de órdenes -->
+        </a>
+      </div>
         <svg 
           (click)="openCartDialog()" 
           xmlns="http://www.w3.org/2000/svg" 

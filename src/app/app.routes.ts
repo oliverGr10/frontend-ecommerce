@@ -14,7 +14,7 @@ import { ProductListComponent } from './user/product-list/product-list.component
 import { ProductDetailComponent } from './user/product-detail/product-detail.component';
 import { ShoppingCartComponent } from './user/shopping-cart/shopping-cart.component';
 import { UserProfileComponent } from './user/user-profile/user-profile.component';
-
+import { ProductsComponent } from './components/products/products.component';
 
 
 
@@ -24,6 +24,8 @@ export const routes: Routes = [
     {path:'home',component:HomePageComponent },
     {path:'dashboard', component:DashboardComponent},
     {path:'signIn',component:SignInComponent},
+    {path:'productos', component: ProductsComponent},
+
     {
       path: 'dashboard-user',
       component: UserLayoutComponent,
