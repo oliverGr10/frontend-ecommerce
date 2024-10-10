@@ -4,27 +4,30 @@
   </div>
 
   <form class="space-y-4">
-    <div class="relative">
-      <input [(ngModel)]="email" name="email" type="email" required
+    <div class="relative mb-4">
+      <input [(ngModel)]="username" name="username" type="text" required
+             [ngClass]="{'border-red-500': errors['username'] && !username}"
              class="peer w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-800 placeholder-transparent"
-             placeholder="Correo electrónico">
-      <label class="absolute left-4 top-1  bg-white text-gray-600 transition-transform transform -translate-y-3 scale-75 origin-top-left peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:text-gray-800">
-        Correo electrónico
+             placeholder="Usuario">
+      <label class="absolute left-4 -top-3 bg-white px-1 text-sm text-gray-600 transition-all peer-placeholder-shown:top-2 peer-placeholder-shown:text-base peer-focus:-top-3 peer-focus:text-sm">
+        Usuario
       </label>
-      <mat-icon class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-800">email</mat-icon>
+      <div *ngIf="errors['username']" class="text-red-500 text-sm mt-1">{{ errors['username'] }}</div>
     </div>
-
-    <div class="relative">
+    
+    <div class="relative mb-4">
       <input [(ngModel)]="password" name="password" [type]="hidePassword ? 'password' : 'text'" required
+             [ngClass]="{'border-red-500': errors['password'] && !password}" 
              class="peer w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-800 placeholder-transparent"
              placeholder="Contraseña">
-      <label class="absolute left-4 top-1 bg-white text-gray-600 transition-transform transform -translate-y-3 scale-75 origin-top-left peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:text-gray-800">
+      <label class="absolute left-4 -top-3 bg-white px-1 text-sm text-gray-600 transition-all peer-placeholder-shown:top-2 peer-placeholder-shown:text-base peer-focus:-top-3 peer-focus:text-sm">
         Contraseña
       </label>
       <button type="button" (click)="hidePassword = !hidePassword" 
               class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-800 focus:outline-none">
         <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
       </button>
+      <div *ngIf="errors['password']" class="text-red-500 text-sm mt-1">{{ errors['password'] }}</div>
     </div>
 
     <div class="flex justify-between items-center text-sm">

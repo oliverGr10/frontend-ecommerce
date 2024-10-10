@@ -1,8 +1,4 @@
 <div class="min-h-screen inset-0 bg-black bg-opacity-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
-  <div class="sm:mx-auto sm:w-full sm:max-w-md">
-  
-  </div>
-
   <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
     <div class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
       <form class="space-y-6" (ngSubmit)="onRegister()">
@@ -10,67 +6,101 @@
           Regístrate 
         </h2>
         <div class="relative">
-          <input id="nombre" name="nombre" type="text" required
-                [(ngModel)]="user.nombre"
-                class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-transparent focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm peer"
+          <input id="name" name="name" type="text" required
+                [(ngModel)]="user.name"
+                (blur)="validateField('name')"
+                [ngClass]="{'border-red-500 focus:ring-red-500': errors['name'], 'border-gray-300': !errors['name']}"
+                class="peer appearance-none block w-full px-3 py-4 border border-gray-300 rounded-md shadow-sm placeholder-transparent focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
                 placeholder="Nombre">
-          <label for="nombre" class="absolute left-4 top-2  bg-white text-gray-600 transition-transform transform -translate-y-3 scale-75 origin-top-left peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:text-gray-800">
+          <label for="name" class="absolute left-3 -top-2 bg-white px-1 text-xs text-gray-600 transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-3.5 peer-focus:-top-2 peer-focus:text-gray-800 peer-focus:text-xs">
             Nombre
           </label>
+          <p *ngIf="errors.name" class="mt-1 text-red-500 text-xs">{{ errors.name }}</p>
         </div>
 
         <div class="relative">
-          <input id="apellidos" name="apellidos" type="text" required
-                [(ngModel)]="user.apellidos"
-                class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-transparent focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm peer"
+          <input id="lastName" name="lastName" type="text" required
+                [(ngModel)]="user.lastName"
+                (blur)="validateField('lastName')"
+                [ngClass]="{'border-red-500': errors.lastName, 'border-gray-300': !errors.lastName}"
+                class="peer appearance-none block w-full px-3 py-4 border border-gray-300 rounded-md shadow-sm placeholder-transparent focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
                 placeholder="Apellidos">
-          <label for="apellidos" class="absolute left-4 top-2  bg-white text-gray-600 transition-transform transform -translate-y-3 scale-75 origin-top-left peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:text-gray-800">
+          <label for="lastName" class="absolute left-3 -top-2 bg-white px-1 text-xs text-gray-600 transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-3.5 peer-focus:-top-2 peer-focus:text-gray-800 peer-focus:text-xs">
             Apellidos
           </label>
+          <p *ngIf="errors.lastName" class="mt-1 text-red-500 text-xs">{{errors.lastName}}</p>
         </div>
 
         <div class="relative">
-          <select id="tipo_documento" name="tipo_documento" required
-                  [(ngModel)]="user.tipo_documento"
-                  class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm">
-            <option value="" disabled selected>Selecciona tipo de documento</option>
+          <select id="documentType" name="documentType" required
+                  [(ngModel)]="user.documentType"
+                  (blur)="validateField('documentType')"
+                  [ngClass]="{'border-red-500': errors.documentType, 'border-gray-300': !errors.documentType}"
+                  class="peer appearance-none block w-full px-3 py-4 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
+                  (focus)="labelFocused = true" (blur)="labelFocused = user.documentType !== ''">
+            <option value="" disabled selected></option>
             <option value="DNI">DNI</option>
             <option value="Pasaporte">Pasaporte</option>
             <option value="Cédula">Cédula</option>
           </select>
-          <label for="tipo_documento" class="absolute left-4 top-2 bg-white text-gray-600">
+          <label for="documentType"
+                 [ngClass]="{ 'text-gray-400 top-3.5 text-base': !labelFocused && user.documentType === '', 'text-gray-800 -top-2 text-xs': labelFocused || user.documentType !== '' }"
+                 class="absolute left-3 bg-white px-1 transition-all duration-200">
             Tipo de documento
           </label>
+          <p *ngIf="errors.documentType" class="mt-1 text-red-500 text-xs" >{{errors.documentType}}</p>
         </div>
-
+        
         <div class="relative">
-          <input id="numero_documento" name="numero_documento" type="text" required
-                [(ngModel)]="user.numero_documento"
-                class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-transparent focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm peer"
+          <input id="numDoc" name="numDoc" type="text" required
+                [(ngModel)]="user.numDoc"
+                (blur)="validateField('numDoc')"
+                [ngClass]="{'border-red-500': errors.numDoc, 'border-gray-300': !errors.numDoc}"
+                class="peer appearance-none block w-full px-3 py-4 border border-gray-300 rounded-md shadow-sm placeholder-transparent focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
                 placeholder="Número de documento">
-          <label for="numero_documento" class="absolute left-4 top-2 bg-white text-gray-600 transition-transform transform -translate-y-3 scale-75 origin-top-left peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:text-gray-800">
+          <label for="numDoc" class="absolute left-3 -top-2 bg-white px-1 text-xs text-gray-600 transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-3.5 peer-focus:-top-2 peer-focus:text-gray-800 peer-focus:text-xs">
             Número de documento
           </label>
+          <p *ngIf="errors.numDoc" class="mt-1 text-red-500 text-xs">{{errors.numDoc}}</p>
         </div>
 
         <div class="relative">
           <input id="email" name="email" type="email" autocomplete="email" required
                 [(ngModel)]="user.email"
-                class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-transparent focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm peer"
+                (blur)="validateField('email')"
+                [ngClass]="{'border-red-500': errors.email, 'border-gray-300': !errors.email}"
+                class="peer appearance-none block w-full px-3 py-4 border border-gray-300 rounded-md shadow-sm placeholder-transparent focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
                 placeholder="Correo electrónico">
-          <label for="email" class="absolute left-4 top-2  bg-white text-gray-600 transition-transform transform -translate-y-3 scale-75 origin-top-left peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:text-gray-800">
+          <label for="email" class="absolute left-3 -top-2 bg-white px-1 text-xs text-gray-600 transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-3.5 peer-focus:-top-2 peer-focus:text-gray-800 peer-focus:text-xs">
             Correo electrónico
           </label>
+          <p *ngIf="errors.email" class="mt-1 text-red-500 text-xs">{{errors.email}}</p>
+        </div>
+
+        <div class="relative">
+          <input id="username" name="username" type="text" required
+                [(ngModel)]="user.username"
+                [ngClass]="{'border-red-500': errors.username, 'border-gray-300': !errors.username}"
+                (blur)="validateField('username')"
+                class="peer appearance-none block w-full px-3 py-4 border border-gray-300 rounded-md shadow-sm placeholder-transparent focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
+                placeholder="Nombre de usuario">
+          <label for="username" class="absolute left-3 -top-2 bg-white px-1 text-xs text-gray-600 transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-3.5 peer-focus:-top-2 peer-focus:text-gray-800 peer-focus:text-xs">
+            Nombre de usuario
+          </label>
+          <p *ngIf="errors.username" class="mt-1 text-red-500 text-xs">{{errors.username}}</p>
         </div>
 
         <div class="relative">
           <input id="password" name="password" type="password" autocomplete="new-password" required
                 [(ngModel)]="user.password"
-                class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-transparent focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm peer"
+                (blur)="validateField('password')"
+                [ngClass]="{'border-red-500': errors.password, 'border-gray-300': !errors.password}"
+                class="peer appearance-none block w-full px-3 py-4 border border-gray-300 rounded-md shadow-sm placeholder-transparent focus:outline-none focus:ring-gray-900 focus:border-gray-900 sm:text-sm"
                 placeholder="Contraseña">
-          <label for="password" class="absolute left-4 top-2  bg-white text-gray-600 transition-transform transform -translate-y-3 scale-75 origin-top-left peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:text-gray-800">
+          <label for="password" class="absolute left-3 -top-2 bg-white px-1 text-xs text-gray-600 transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-placeholder-shown:top-3.5 peer-focus:-top-2 peer-focus:text-gray-800 peer-focus:text-xs">
             Contraseña
           </label>
+          <p *ngIf="errors.password" class="mt-1 text-red-500 text-xs">{{errors.password}}</p>
         </div>
 
         <div>
@@ -95,7 +125,7 @@
 
         <div class="mt-6">
           <button (click)="goToLogin()"
-                  class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-gray-800 bg-white hover:bg-gray-900 hover:text-white">
+                  class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-gray-700 hover:bg-gray-900 hover:text-white">
             Iniciar sesión
           </button>
         </div>

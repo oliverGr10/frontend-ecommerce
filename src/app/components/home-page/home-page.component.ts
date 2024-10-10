@@ -1,5 +1,6 @@
+import { AuthService } from './../auth/auth.service';
 import { LoginComponent } from '../login/login.component';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { ProductHomeComponent } from '../product-home/product-home.component';
@@ -12,14 +13,23 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-home-page',
   standalone: true,
-  imports: [RouterLink, RouterLinkActive,ProductHomeComponent,AboutHomeComponent,FooterHomeComponent,CarouselHomeComponent,CartDialogComponent, CommonModule],
+  imports: [
+    RouterLink,
+    RouterLinkActive,
+    ProductHomeComponent,
+    AboutHomeComponent,
+    FooterHomeComponent,
+    CarouselHomeComponent,
+    CartDialogComponent,
+    CommonModule
+  ],
   templateUrl: './home-page.component.html',
-  styleUrl: './home-page.component.css'
+  styleUrls: ['./home-page.component.css'] // Cambiado a styleUrls
 })
-export class HomePageComponent {
-  isLoggedIn = false; // Simulación de estado de inicio de sesión
+export class HomePageComponent implements OnInit {
+  isLoggedIn = false; // Inicialización correcta de estado de inicio de sesión
 
-  constructor(public dialog: MatDialog) {}
+  constructor(public dialog: MatDialog, private authService: AuthService) {}
 
   openLoginDialog(): void {
     const dialogRef = this.dialog.open(LoginComponent, {
@@ -28,12 +38,10 @@ export class HomePageComponent {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.isLoggedIn = true; // Cambia a true si el usuario inicia sesión
-        console.log('Usuario autenticado:', this.isLoggedIn);
+        this.isLoggedIn = this.authService.isLoggedIn(); // Verifica si el usuario está autenticado
       }
     });
   }
-  
 
   // Método para abrir el diálogo del carrito
   openCartDialog(): void {
@@ -46,6 +54,7 @@ export class HomePageComponent {
   }
 
   ngOnInit(): void {
+    // Aquí puedes verificar el estado de autenticación al cargar la página
+    this.isLoggedIn = this.authService.isLoggedIn();
   }
-
 }

@@ -15,6 +15,7 @@ import { ProductDetailComponent } from './user/product-detail/product-detail.com
 import { ShoppingCartComponent } from './user/shopping-cart/shopping-cart.component';
 import { UserProfileComponent } from './user/user-profile/user-profile.component';
 import { ProductsComponent } from './components/products/products.component';
+import { AdminGuard } from './components/auth/guard-admin/admin.guard';
 
 
 
@@ -39,6 +40,7 @@ export const routes: Routes = [
     {
         path: 'admin',
         component: AdminLayoutComponent,
+        canActivate: [AdminGuard],
         children: [
             { path:'', redirectTo: 'dashboard-admin',pathMatch: 'full' },
           { path: 'dashboard-admin', component: AdminDashboardComponent },
