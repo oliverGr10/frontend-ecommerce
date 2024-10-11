@@ -11,25 +11,30 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
   styleUrls: ['./products.component.scss']
 })
 export class ProductsComponent {
-  showCategories = false;
-
+  isSidebarOpen = false;
+  categories = [
+    { name: 'Hogar', isOpen: false, subCategories: ['Muebles', 'Decoración', 'Cocina'] },
+    { name: 'Electrónica', isOpen: false, subCategories: ['Televisores', 'Computadoras', 'Teléfonos'] },
+    { name: 'Ropa', isOpen: false, subCategories: ['Camisetas', 'Pantalones', 'Zapatos'] },
+  ];
   products = [
-    {
-      id: 1,
-      name: 'Zapatillas Deportivas',
-      price: 49.99,
-      image: 'url_imagen_zapatillas'
-    },
-    {
-      id: 2,
-      name: 'Reloj Inteligente',
-      price: 79.99,
-      image: 'url_imagen_reloj'
-    }
-    //más productos
+    { name: 'Producto 1', price: 19.99, image: 'https://via.placeholder.com/300x200' },
+    { name: 'Producto 2', price: 29.99, image: 'https://via.placeholder.com/300x200' },
+    { name: 'Producto 3', price: 39.99, image: 'https://via.placeholder.com/300x200' },
+    { name: 'Producto 4', price: 49.99, image: 'https://via.placeholder.com/300x200' },
+    { name: 'Producto 5', price: 59.99, image: 'https://via.placeholder.com/300x200' },
+    { name: 'Producto 6', price: 69.99, image: 'https://via.placeholder.com/300x200' },
   ];
 
-  toggleCategories() {
-    this.showCategories = !this.showCategories;
+  toggleSidebar() {
+    this.isSidebarOpen = !this.isSidebarOpen;
+  }
+
+  closeSidebar() {
+    this.isSidebarOpen = false;
+  }
+
+  toggleCategory(category: any) {
+    category.isOpen = !category.isOpen;
   }
 }

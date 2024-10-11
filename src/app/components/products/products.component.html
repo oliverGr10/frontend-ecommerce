@@ -1,62 +1,76 @@
-<div class="bg-gray-900 text-white min-h-screen">
-    <header class="p-4 bg-gray-800 text-white">
-      <nav class="flex justify-between items-center">
-        <div class="text-2xl md:text-3xl text-red-500 hover:text-red-400 font-bold flex items-center">
-          <i class="fas fa-shopping-cart text-white mr-2"></i>
-          Add to Cart
-        </div>
-        <ul class="flex space-x-4">
-          <li><a routerLink="/home" class="hover:text-gray-300">Inicio</a></li>
-          <li><a routerLink="/productos" class="hover:text-gray-300">Productos</a></li>
-        </ul>
-      </nav>
-    </header>
-  
-    <main class="container mx-auto px-4 py-8">
-      <h2 class="text-2xl font-bold mb-6">Categorías</h2>
-      <div class="grid grid-cols-3 gap-4">
-        <div class="relative group bg-gray-800 p-4 rounded-lg text-center">
-          <h3 class="font-bold">Hogar</h3>
-          <!-- Subcategorías de Hogar -->
-          <ul class="absolute hidden group-hover:block bg-gray-700 p-2 rounded-lg mt-2 w-full">
-            <li class="hover:bg-gray-600 p-2"><a href="#">Muebles</a></li>
-            <li class="hover:bg-gray-600 p-2"><a href="#">Decoración</a></li>
-            <li class="hover:bg-gray-600 p-2"><a href="#">Cocina</a></li>
-          </ul>
-        </div>
-      
-        <div class="relative group bg-gray-800 p-4 rounded-lg text-center">
-          <h3 class="font-bold">Electrónica</h3>
-          <!-- Subcategorías de Electrónica -->
-          <ul class="absolute hidden group-hover:block bg-gray-700 p-2 rounded-lg mt-2 w-full">
-            <li class="hover:bg-gray-600 p-2"><a href="#">Televisores</a></li>
-            <li class="hover:bg-gray-600 p-2"><a href="#">Computadoras</a></li>
-            <li class="hover:bg-gray-600 p-2"><a href="#">Teléfonos</a></li>
-          </ul>
-        </div>
-      
-        <div class="relative group bg-gray-800 p-4 rounded-lg text-center">
-          <h3 class="font-bold">Ropa</h3>
-          <!-- Subcategorías de Ropa -->
-          <ul class="absolute hidden group-hover:block bg-gray-700 p-2 rounded-lg mt-2 w-full">
-            <li class="hover:bg-gray-600 p-2"><a href="#">Camisetas</a></li>
-            <li class="hover:bg-gray-600 p-2"><a href="#">Pantalones</a></li>
-            <li class="hover:bg-gray-600 p-2"><a href="#">Zapatos</a></li>
-          </ul>
+<!-- app.component.html -->
+<div class="bg-gray-900 text-white min-h-screen flex">
+  <!-- Sidebar -->
+  <div class="fixed inset-y-0 left-0 z-30 w-64 overflow-y-auto transition duration-300 transform bg-gray-900 bg-opacity-50 backdrop-blur-md"
+       [ngClass]="{'translate-x-0 ease-out': isSidebarOpen, '-translate-x-full ease-in': !isSidebarOpen}">
+    <div class="flex items-center justify-between mt-8 px-6">
+      <div class="flex items-center">
+        <i class="fas fa-shopping-cart text-white mr-2 text-2xl"></i>
+        <span class="text-white text-2xl font-semibold">Add to Cart</span>
+      </div>
+      <button class="text-white lg:hidden" (click)="toggleSidebar()">
+        <i class="fas fa-chevron-left"></i>
+      </button>
+    </div>
+    <nav class="mt-10">
+      <a class="flex items-center px-6 py-2 mt-4 text-gray-100 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100"
+         routerLink="/home" (click)="closeSidebar()">
+        <i class="fas fa-home mr-3 text-xl"></i>
+        Inicio
+      </a>
+      <a class="flex items-center px-6 py-2 mt-4 text-gray-100 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100"
+         routerLink="/productos" (click)="closeSidebar()">
+        <i class="fas fa-box mr-3 text-xl"></i>
+        Productos
+      </a>
+      <!-- Categorías en el sidebar -->
+      <div class="px-6 py-2 mt-4">
+        <h3 class="text-xs uppercase text-gray-500 font-semibold">Categorías</h3>
+        <div *ngFor="let category of categories" class="mt-2">
+          <button class="flex items-center w-full text-gray-100 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100"
+                  (click)="toggleCategory(category)">
+            <i class="fas fa-folder mr-2 text-xl"></i>
+            <span class="mr-2">{{ category.name }}</span>
+            <i class="fas fa-chevron-down ml-auto" [ngClass]="{'transform rotate-180': category.isOpen}"></i>
+          </button>
+          <div *ngIf="category.isOpen" class="pl-8 mt-2">
+            <a *ngFor="let subCategory of category.subCategories" 
+               class="flex items-center py-1 text-sm text-gray-400 hover:text-gray-100" 
+               href="#">
+              <i class="fas fa-tag mr-2"></i>
+              {{ subCategory }}
+            </a>
+          </div>
         </div>
       </div>
-      
-  
-      <h2 class="text-2xl font-bold mt-8 mb-6">Productos</h2>
-      <div class="grid grid-cols-3 gap-4">
-        <div *ngFor="let product of products" class="bg-white p-4 rounded-lg shadow">
-          <img [src]="product.image" alt="{{ product.name }}" class="w-full h-48 object-cover mb-4">
-          <h3>{{ product.name }}</h3>
-          <p>${{ product.price }}</p>
+    </nav>
+  </div>
+
+  <!-- Button to toggle Sidebar -->
+  <button class="fixed top-4 left-4 z-40 p-3 bg-gray-800 text-white rounded-full shadow-lg transition-all duration-300 ease-in-out"
+          [ngClass]="{'translate-x-0': !isSidebarOpen, 'translate-x-64': isSidebarOpen}"
+          (click)="toggleSidebar()">
+    <i class="fas" [ngClass]="{'fa-bars': !isSidebarOpen, 'fa-arrow-left': isSidebarOpen}"></i>
+  </button>
+
+  <!-- Content -->
+  <div class="flex-1 flex flex-col overflow-hidden" [ngClass]="{'ml-0': !isSidebarOpen, 'ml-64': isSidebarOpen}">
+    <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-900">
+      <div class="container mx-auto px-6 py-8">
+        <h2 class="text-2xl font-bold mb-6">Productos</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+          <div *ngFor="let product of products" class="bg-gray-800 rounded-lg shadow-lg overflow-hidden transition duration-300 ease-in-out transform hover:-translate-y-1 hover:shadow-xl">
+            <img [src]="product.image" alt="{{ product.name }}" class="w-full h-48 object-cover">
+            <div class="p-4">
+              <h3 class="text-lg font-semibold">{{ product.name }}</h3>
+              <p class="text-gray-400 mt-2">${{ product.price }}</p>
+              <button class="mt-4 w-full bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out">
+                Agregar al carrito
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </main>
   </div>
-  
-  
-  
+</div>
