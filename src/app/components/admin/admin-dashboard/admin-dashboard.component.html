@@ -1,138 +1,141 @@
-<!-- admin-dashboard.component.html -->
-<div class="p-6 bg-gray-100">
-  <!-- Sales Summary -->
-  <div class="mb-8">
-    <h2 class="text-xl font-sans font-semibold mb-4">Sales Summary</h2>
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-      <div class="bg-white p-4 rounded-lg shadow flex items-center">
-        <div class="rounded-full bg-blue-100 p-3 mr-4">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-          </svg>
-        </div>
-        <div>
-          <p class="text-xl font-semibold text-[#5C6F88]">143.3k</p>
-          <p class="text-sm text-gray-500 font-sans">Today's Sale</p>
-          
-        </div>
+<div class="p-8 font-sans bg-gray-100">
+  <div class="flex justify-between items-center mb-6">
+    <h1 class="text-2xl font-semibold">Reports</h1>
+    <button class="bg-sky-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 flex items-center">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+        <path d="M4 0a2 2 0 00-2 2v2h-1a1 1 0 00-1 1v12a1 1 0 001 1h15a1 1 0 001-1V5a1 1 0 00-1-1h-1V2a2 2 0 00-2-2H4zm11 2v2H5V2h10zm1 7h-1a1 1 0 00-1 1v4H6v-4a1 1 0 00-1-1H4v-1h12v1zm-7 5h2v1a1 1 0 11-2 0v-1zM5 6h10v8H5V6zm1 1v1h8V7H6z"/>
+      </svg>
+      Print Reports
+    </button>
+  </div>
+
+  <!-- Weekly Sales Chart -->
+  <div class="bg-white p-6 rounded-lg shadow-md mb-8">
+    <div class="flex justify-between items-center mb-4">
+      <h2 class="text-xl font-semibold">Weekly Sales</h2>
+      <div class="flex items-center">
+        <button class="text-gray-400 hover:text-gray-600">&lt;</button>
+        <span class="mx-2 text-sm text-gray-600">Aug 19-25</span>
+        <button class="text-gray-400 hover:text-gray-600">&gt;</button>
       </div>
-      <div class="bg-white p-4 rounded-lg shadow flex items-center">
-        <div class="rounded-full bg-purple-100 p-3 mr-4">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-purple-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
-          </svg>
-        </div>
-        <div>
-          <p class="text-xl font-semibold text-[#5C6F88]">$ 260,423</p>
-          <p class="text-sm text-gray-500 font-sans">Yearly Total Sales</p>
-        </div>
+    </div>
+    <!-- Comentario: Aquí se necesita una librería de gráficos para el heatmap -->
+    <div class="h-64 relative">
+      <!-- Placeholder para el gráfico de calor -->
+      <div class="absolute inset-0 grid grid-cols-7 grid-rows-8 gap-1">
+        <!-- Aquí se generarían dinámicamente los rectángulos del heatmap -->
+        <!-- Ejemplo de un rectángulo: -->
+        <div class="bg-blue-300"></div>
       </div>
-      <div class="bg-white p-4 rounded-lg shadow flex items-center">
-        <div class="rounded-full bg-yellow-100 p-3 mr-4">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-yellow-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-          </svg>
-        </div>
-        <div>
-          <p class="text-xl font-semibold text-[#5C6F88]">$68.9k</p>
-          <p class="text-sm text-gray-500 font-sans">Net Income</p>
-        </div>
+      <!-- Etiquetas de horas a la izquierda -->
+      <div class="absolute left-0 top-0 bottom-0 w-10 flex flex-col justify-between text-xs text-gray-500">
+        <span>09:00</span>
+        <span>12:00</span>
+        <span>15:00</span>
+        <span>18:00</span>
       </div>
-      <div class="bg-white p-4 rounded-lg shadow flex items-center">
-        <div class="rounded-full bg-red-100 p-3 mr-4">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
-          </svg>
-        </div>
-        <div>
-          <p class="text-xl font-semibold text-[#5C6F88]">243</p>
-          <p class="text-sm text-gray-500 font-sans">Products</p>
-        </div>
+      <!-- Etiquetas de días en la parte superior -->
+      <div class="absolute top-0 left-10 right-0 h-6 flex justify-between text-xs text-gray-500">
+        <span>Mon</span>
+        <span>Tue</span>
+        <span>Wed</span>
+        <span>Thu</span>
+        <span>Fri</span>
+        <span>Sat</span>
+        <span>Sun</span>
       </div>
+    </div>
+    <div class="flex justify-center mt-4 space-x-4">
+      <span class="flex items-center"><span class="w-3 h-3 bg-blue-200 rounded-full mr-2"></span>0-500</span>
+      <span class="flex items-center"><span class="w-3 h-3 bg-blue-400 rounded-full mr-2"></span>501-1,000</span>
+      <span class="flex items-center"><span class="w-3 h-3 bg-blue-600 rounded-full mr-2"></span>1,001-5,000</span>
     </div>
   </div>
 
-  <!-- Stock Report -->
-  <div class="mb-8">
-    
-    <div class="bg-white p-4 rounded-lg shadow">
-      <!-- Aquí iría el gráfico. Para implementarlo, necesitarías una librería de gráficos como Chart.js -->
-      <div class="flex items-center justify-between">
-        <h2 class="text-xl font-sans font-semibold mb-4">Stock Report</h2>
-        <div class="flex space-x-4">
-          <!-- Stock In -->
-          <div class="flex items-center space-x-2">
-            <span class="w-3 h-3 bg-[#04B4FC] rounded-full inline-block"></span>
-            <span class="text-[#04B4FC] font-sans">Stock In</span>
-          </div>
-          <!-- Stock Out -->
-          <div class="flex items-center space-x-2">
-            <span class="w-3 h-3 bg-[#6C11D9] rounded-full inline-block"></span>
-            <span class="text-[#6C11D9] font-sans">Stock Out</span>
-          </div>
+  <!-- Supplier Performance Report -->
+  <div class="bg-white p-6 rounded-lg shadow-md">
+    <h2 class="text-xl font-semibold mb-4">
+      Supplier Performance Report <span class="text-[#5C6F88]">(Top 5 Suppliers)</span>
+    </h2>
+    <!-- Comentario: Aquí se necesita una librería de gráficos para las barras apiladas -->
+    <div class="h-64 relative">
+      <!-- Placeholder para el gráfico de barras apiladas -->
+      <div class="absolute inset-0 flex items-end">
+        <!-- Aquí se generarían dinámicamente las barras apiladas -->
+        <!-- Ejemplo de una barra apilada: -->
+        <div class="w-1/5 h-full flex flex-col justify-end">
+          <div class="h-1/2 bg-blue-500"></div>
+          <div class="h-1/4 bg-yellow-500"></div>
+          <div class="h-1/4 bg-pink-500"></div>
         </div>
       </div>
-    
-      <div class="h-64 bg-red-100 flex items-center justify-center">
-        <p class="text-gray-500">Stock chart goes here</p>
+      <!-- Etiquetas de proveedores a la izquierda -->
+      <div class="absolute left-0 top-0 bottom-0 w-20 flex flex-col justify-around text-sm text-gray-600">
+        <span>Apple</span>
+        <span>Samsung</span>
+        <span>Asus</span>
+        <span>Xiaomi</span>
+        <span>Logitech</span>
       </div>
     </div>
-
-<!-- Sales Order -->
-<div class="mt-6"> 
-  <div class="bg-white rounded-lg shadow overflow-hidden">
-    <div class="flex justify-between items-center p-4 border-b">
-      <h2 class="text-xl font-sans font-semibold">Sales Order</h2>
-      <div class="flex items-center text-[#04B4FC]">
-        <h3 class=" font-sans font-semibold">Last 7 Days</h3>
-        <button class="text-[#04B4FC]">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-          </svg>
-        </button>
-      </div>
+    <div class="flex justify-center mt-4 space-x-4">
+      <span class="flex items-center"><span class="w-3 h-3 bg-blue-500 rounded-full mr-2"></span>Early</span>
+      <span class="flex items-center"><span class="w-3 h-3 bg-yellow-500 rounded-full mr-2"></span>On Time</span>
+      <span class="flex items-center"><span class="w-3 h-3 bg-pink-500 rounded-full mr-2"></span>Late</span>
     </div>
-
-    <table class="w-full">
-      <thead>
-        <tr class="bg-gray-50">
-          <th class="text-left py-3 px-4 font-semibold text-gray-600">Channel</th>
-          <th class="text-center py-3 px-4 font-sans font-semibold text-gray-600">Draft</th>
-          <th class="text-center py-3 px-4 font-sans font-semibold text-gray-600">Confirmed</th>
-          <th class="text-center py-3 px-4 font-sans font-semibold text-gray-600">Packed</th>
-          <th class="text-center py-3 px-4 font-sans font-semibold text-gray-600">Shipped</th>
-          <th class="text-center py-3 px-4 font-sans font-semibold text-gray-600">Invoiced</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr class="hover:bg-gray-100 transition duration-300 ease-in-out cursor-pointer">
-          <td class="py-3 font-sans px-4">Direct Sales</td>
-          <td class="text-center py-3 px-4">2</td>
-          <td class="text-center py-3 px-4">32</td>
-          <td class="text-center py-3 px-4">42</td>
-          <td class="text-center py-3 px-4">23</td>
-          <td class="text-center py-3 px-4">7</td>
-        </tr>
-        <tr class=" hover:bg-gray-100 transition duration-300 ease-in-out cursor-pointer">
-          <td class="py-3 font-sans px-4">Wholesale</td>
-          <td class="text-center py-3 px-4">0</td>
-          <td class="text-center py-3 px-4">41</td>
-          <td class="text-center py-3 px-4">33</td>
-          <td class="text-center py-3 px-4">11</td>
-          <td class="text-center py-3 px-4">14</td>
-        </tr>
-        <tr class="hover:bg-gray-100 transition duration-300 ease-in-out cursor-pointer">
-          <td class="py-3 font-sans px-4">Retail</td>
-          <td class="text-center py-3 px-4">2</td>
-          <td class="text-center py-3 px-4">12</td>
-          <td class="text-center py-3 px-4">25</td>
-          <td class="text-center py-3 px-4">16</td>
-          <td class="text-center py-3 px-4">21</td>
-        </tr>
-      </tbody>
-    </table>
   </div>
 </div>
 
+<!-- Comentarios adicionales:
+1. Para el gráfico de calor (heatmap), se recomienda usar una librería como Chart.js o D3.js.
+   Ejemplo con Chart.js:
+   ```javascript
+   new Chart(ctx, {
+     type: 'heatmap',
+     data: {
+       datasets: [{
+         data: [
+           { x: 'Mon', y: '09:00', v: 150 },
+           { x: 'Mon', y: '12:00', v: 300 },
+           // ... más datos ...
+         ]
+       }]
+     },
+     options: {
+       plugins: {
+         legend: false
+       },
+       scales: {
+         x: { type: 'category' },
+         y: { type: 'category', reverse: true }
+       }
+     }
+   });
+   ```
 
-</div>
+2. Para el gráfico de barras apiladas, también se puede usar Chart.js o D3.js.
+   Ejemplo con Chart.js:
+   ```javascript
+   new Chart(ctx, {
+     type: 'bar',
+     data: {
+       labels: ['Apple', 'Samsung', 'Asus', 'Xiaomi', 'Logitech'],
+       datasets: [
+         { label: 'Early', data: [65, 59, 80, 81, 56], backgroundColor: '#3B82F6' },
+         { label: 'On Time', data: [28, 48, 40, 19, 86], backgroundColor: '#EAB308' },
+         { label: 'Late', data: [7, 14, 20, 10, 18], backgroundColor: '#EC4899' }
+       ]
+     },
+     options: {
+       scales: {
+         x: { stacked: true },
+         y: { stacked: true }
+       }
+     }
+   });
+   ```
+
+3. Asegúrate de ajustar los colores y estilos exactamente según el diseño proporcionado.
+4. Los datos mostrados son de ejemplo. Deberás reemplazarlos con datos reales de tu aplicación.
+5. La interactividad (como los botones de navegación en el gráfico de ventas semanales) requerirá lógica adicional en el componente.
+-->
