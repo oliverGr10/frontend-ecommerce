@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ProductListComponent } from '../product-list/product-list.component';
 import { CommonModule } from '@angular/common';
 import { RouterLink, RouterLinkActive } from '@angular/router';
@@ -12,19 +12,22 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 })
 export class ProductsComponent {
   isSidebarOpen = false;
+  selectedSubCategory: string | null = null; // Variable para guardar la subcategoría seleccionada
+
   categories = [
     { name: 'Hogar', isOpen: false, subCategories: ['Muebles', 'Decoración', 'Cocina'] },
     { name: 'Electrónica', isOpen: false, subCategories: ['Televisores', 'Computadoras', 'Teléfonos'] },
     { name: 'Ropa', isOpen: false, subCategories: ['Camisetas', 'Pantalones', 'Zapatos'] },
   ];
+
   products = [
-    { name: 'Producto 1', price: 19.99, image: 'https://via.placeholder.com/300x200' },
-    { name: 'Producto 2', price: 29.99, image: 'https://via.placeholder.com/300x200' },
-    { name: 'Producto 3', price: 39.99, image: 'https://via.placeholder.com/300x200' },
-    { name: 'Producto 4', price: 49.99, image: 'https://via.placeholder.com/300x200' },
-    { name: 'Producto 5', price: 59.99, image: 'https://via.placeholder.com/300x200' },
-    { name: 'Producto 6', price: 69.99, image: 'https://via.placeholder.com/300x200' },
+    { name: 'Producto 1', price: 19.99, image: 'https://via.placeholder.com/300x200', category: 'Hogar', subcategory: 'Muebles' },
+    { name: 'Producto 2', price: 29.99, image: 'https://via.placeholder.com/300x200', category: 'Electrónica', subcategory: 'Televisores' },
+    { name: 'Producto 3', price: 39.99, image: 'https://via.placeholder.com/300x200', category: 'Ropa', subcategory: 'Camisetas' },
+    // otros productos...
   ];
+
+  filteredProducts = this.products; // Lista de productos filtrados
 
   toggleSidebar() {
     this.isSidebarOpen = !this.isSidebarOpen;
@@ -37,4 +40,20 @@ export class ProductsComponent {
   toggleCategory(category: any) {
     category.isOpen = !category.isOpen;
   }
+
+  filterBySubCategory(subCategory: string) {
+    // Si la subcategoría ya está seleccionada, mostramos todos los productos
+    if (this.selectedSubCategory === subCategory) {
+      this.selectedSubCategory = null;
+      this.filteredProducts = this.products;
+    } else {
+      // Si es una nueva subcategoría, filtramos los productos
+      this.selectedSubCategory = subCategory;
+      this.filteredProducts = this.products.filter(
+        product => product.subcategory === subCategory
+      );
+    }
+  }
 }
+
+

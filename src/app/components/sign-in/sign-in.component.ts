@@ -53,7 +53,7 @@ export class SignInComponent {
   onRegister() {
     const result = userSchema.safeParse(this.user);
     if (!result.success) {
-      result.error.errors.forEach(error => {
+      result.error.errors.forEach((error: { path: (string | number | symbol)[]; message: string | undefined; }) => {
         this.errors[error.path[0] as keyof UserSchemaType] = error.message;
       });
      // Alerta para errores de validación
