@@ -24,30 +24,46 @@
             <!-- Contenido del formulario -->
             <form (ngSubmit)="onSubmit()" #proveedorForm="ngForm" class="space-y-6 text-2xl">
               <div class="relative mt-6">
-                <input type="text" id="nombre" name="nombre" [(ngModel)]="proveedor.nombre" required
+                <input type="text" id="nombre" name="nombre" [(ngModel)]="proveedor.name" required
                        class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border border-gray-900 appearance-none focus:outline-none focus:ring-0 focus:border-[#052339] peer"
                        placeholder=" " />
                 <label for="nombre" class="absolute text-sm text-gray-500 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-[#052339] peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1">
-                  Nombre
+                  Empresa
                 </label>
+                <div *ngIf="validationErrors['name']" class="text-red-500 text-sm mt-1">
+                  <div *ngFor="let error of validationErrors['name']">
+                    {{ error }}
+                  </div>
+                </div>
+                
               </div>
 
               <div class="relative">
-                <input type="text" id="contacto" name="contacto" [(ngModel)]="proveedor.contacto"
+                <input type="text" id="contacto" name="contacto" [(ngModel)]="proveedor.contact"
                        class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border border-gray-900 appearance-none focus:outline-none focus:ring-0 focus:border-[#052339] peer"
                        placeholder=" " />
                 <label for="contacto" class="absolute text-sm text-gray-500 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-[#052339] peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1">
                   Contacto
                 </label>
+                <div *ngIf="validationErrors['contact']" class="text-red-500 text-sm">
+                  <div *ngFor="let error of validationErrors['contact']">
+                    {{ error }}
+                  </div>
+                </div>
               </div>
 
               <div class="relative">
-                <input type="tel" id="telefono" name="telefono" [(ngModel)]="proveedor.telefono"
+                <input type="tel" id="telefono" name="telefono" [(ngModel)]="proveedor.phone"
                        class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border border-gray-900 appearance-none focus:outline-none focus:ring-0 focus:border-[#052339] peer"
                        placeholder=" " />
                 <label for="telefono" class="absolute text-sm text-gray-500 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-[#052339] peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1">
                   Teléfono
                 </label>
+                <div *ngIf="validationErrors['phone']" class="text-red-500 text-sm">
+                  <div *ngFor="let error of validationErrors['phone']">
+                    {{ error }}
+                  </div>
+                </div>
               </div>
 
               <div class="relative">
@@ -57,33 +73,53 @@
                 <label for="email" class="absolute text-sm text-gray-500 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-[#052339] peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1">
                   Correo electrónico
                 </label>
+                <div *ngIf="validationErrors['email']" class="text-red-500 text-sm">
+                  <div *ngFor="let error of validationErrors['email']">
+                    {{ error }}
+                  </div>
+                </div>
               </div>
 
               <div class="relative">
-                <textarea id="direccion" name="direccion" [(ngModel)]="proveedor.direccion" rows="3"
+                <textarea id="direccion" name="direccion" [(ngModel)]="proveedor.address" rows="3"
                           class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border border-gray-900 appearance-none focus:outline-none focus:ring-0 focus:border-[#052339] peer"
                           placeholder=" "></textarea>
                 <label for="direccion" class="absolute text-sm text-gray-500 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-[#052339] peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1">
                   Dirección
                 </label>
+                <div *ngIf="validationErrors['address']" class="text-red-500 text-sm">
+                  <div *ngFor="let error of validationErrors['address']">
+                    {{ error }}
+                  </div>
+                </div>
               </div>
 
               <div class="relative">
-                <input type="text" id="pais" name="pais" [(ngModel)]="proveedor.pais"
+                <input type="text" id="pais" name="pais" [(ngModel)]="proveedor.country"
                        class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border border-gray-900 appearance-none focus:outline-none focus:ring-0 focus:border-[#052339] peer"
                        placeholder=" " />
                 <label for="pais" class="absolute text-sm text-gray-500 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-[#052339] peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1">
                   País
                 </label>
+                <div *ngIf="validationErrors['country']" class="text-red-500 text-sm">
+                  <div *ngFor="let error of validationErrors['country']">
+                    {{ error }}
+                  </div>
+                </div>
               </div>
 
               <div class="relative">
-                <input type="text" id="terminos_pago" name="terminos_pago" [(ngModel)]="proveedor.terminos_pago"
+                <input type="text" id="terminos_pago" name="terminos_pago" [(ngModel)]="proveedor.pay_terms"
                        class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border border-gray-900 appearance-none focus:outline-none focus:ring-0 focus:border-[#052339] peer"
                        placeholder=" " />
                 <label for="terminos_pago" class="absolute text-sm text-gray-500 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-[#052339] peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1">
                   Términos de Pago
                 </label>
+                <div *ngIf="validationErrors['pay_terms']" class="text-red-500 text-sm">
+                  <div *ngFor="let error of validationErrors['pay_terms']">
+                    {{ error }}
+                  </div>
+                </div>
               </div>
 
               <div>
