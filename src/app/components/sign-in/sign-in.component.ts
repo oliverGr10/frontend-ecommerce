@@ -50,10 +50,9 @@ export class SignInComponent {
     }
   }
 
-  onRegister() {
-    const result = userSchema.safeParse(this.user);
+  /*const result = userSchema.safeParse(this.user);
     if (!result.success) {
-      result.error.errors.forEach(error => {
+      result.error.errors.forEach((error: { path: (string | number | symbol)[]; message: string | undefined; }) => {
         this.errors[error.path[0] as keyof UserSchemaType] = error.message;
       });
      // Alerta para errores de validación
@@ -89,8 +88,65 @@ export class SignInComponent {
         }
       );
     }
-  }
-  goToLogin() {
-    this.router.navigate(['/login']);
-  }
+  }*/
+    onRegister() {
+      const result = userSchema.safeParse(this.user);
+      if (!result.success) {
+        result.error.errors.forEach((error: { path: (string | number | symbol)[]; message: string | undefined; }) => {
+          this.errors[error.path[0] as keyof UserSchemaType] = error.message;
+        });
+        Swal.fire({
+          title: 'Error en el registro',
+          text: 'Revisa los campos ingresados.',
+          icon: 'error',
+          confirmButtonText: 'Aceptar'
+        });
+      } else {
+        this.authService.signup(result.data).subscribe(
+          response => {
+            console.log('Registro exitoso', response);
+            
+            const loginData = {
+              username: this.user.username,
+              password: this.user.password
+            };
+    
+            this.authService.login(loginData).subscribe(
+              loginResponse => {
+                console.log('Sesión iniciada automáticamente', loginResponse);
+                Swal.fire({
+                  title: '¡Registro exitoso!',
+                  text: 'Sesión iniciada correctamente.',
+                  icon: 'success',
+                  confirmButtonText: 'Aceptar'
+                }).then(() => {
+                  this.router.navigate(['/home']);
+                });
+              },
+              loginError => {
+                console.error('Error al iniciar sesión automáticamente', loginError);
+                Swal.fire({
+                  title: 'Error al iniciar sesión',
+                  text: 'Ocurrió un problema al iniciar sesión automáticamente. Por favor, inicia sesión manualmente.',
+                  icon: 'error',
+                  confirmButtonText: 'Aceptar'
+                });
+              }
+            );
+          },
+          error => {
+            console.error('Error en el registro', error);
+            Swal.fire({
+              title: 'Error en el registro',
+              text: 'Ocurrió un error al registrar el usuario.',
+              icon: 'error',
+              confirmButtonText: 'Aceptar'
+            });
+          }
+        );
+      }
+    }    
+    goToLogin() {
+      this.router.navigate(['/login']);
+    }
 }
