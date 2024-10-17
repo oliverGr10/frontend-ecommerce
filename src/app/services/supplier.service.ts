@@ -1,39 +1,53 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-
+import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from '@angular/common/http';
+import { catchError, Observable, throwError } from 'rxjs';
+import { Suppliers } from '../interface/suppliers';
 
 @Injectable({
-    providedIn: 'root'
-  })
-  export class SuppliersService {
-    private apiUrl = 'http://localhost:8081/api/v1/suppliers';
-  
-    constructor(private http: HttpClient) { }
-  
-    // Método para agregar un proveedor
-    addSupplier(supplier: any): Observable<any> {
-      return this.http.post<any>(this.apiUrl, supplier);
-    }
-  
-    // Método para editar un proveedor por su ID
-    editSupplier(id: string, updatedSupplier: any): Observable<any> {
-      return this.http.patch<any>(`${this.apiUrl}/${id}`, updatedSupplier);
-    }
-  
-    // Método para eliminar un proveedor por su ID
-    deleteSupplier(id: string): Observable<any> {
-      return this.http.delete<any>(`${this.apiUrl}/${id}`);
-    }
-  
-    // Método para buscar proveedores por nombre
-    searchSuppliersByName(name: string): Observable<any[]> {
-      return this.http.get<any[]>(`${this.apiUrl}?name=${name}`);
-    }
-  
-    // Función para obtener el logo de la empresa utilizando Clearbit
-    getCompanyLogo(domain: string): string {
-      return `https://logo.clearbit.com/${domain}`;
-    }
+  providedIn: 'root'
+})
+export class SupplierService {
+  private apiUrl = 'http://localhost:8081/api/v1/suppliers';
+
+  constructor(private http: HttpClient) { }
+
+  addSupplier(supplier: any): Observable<any> {
+    return this.http.post(this.apiUrl, supplier);
+  }
+  getSuppliers(): Observable<Suppliers[]> {
+    return this.http.get<any[]>(this.apiUrl);
+  }
+  getSupplierById(id: number): Observable<Suppliers> {
+    return this.http.get<Suppliers>(`${this.apiUrl}/${id}`);  // apiUrl debe tener el endpoint para un solo proveedor
+  }
+
+  updateSupplier(supplier: Suppliers): Observable<Suppliers> {
+    console.log('Datos del proveedor a actualizar:', JSON.stringify(supplier));
+    
+    return this.http.put<Suppliers>(this.apiUrl, supplier, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      }),
+    }).pipe(
+      catchError(this.handleError)
+    );
+  }
+  deleteSupplier(id: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/${id}`).pipe(
+      catchError(this.handleError)
+    );
   }
   
+
+  private handleError(error: HttpErrorResponse) {
+    console.error('Error detallado:', error);
+    let errorMessage = 'Ocurrió un error desconocido';
+    if (error.error instanceof ErrorEvent) {
+      errorMessage = `Error del cliente: ${error.error.message}`;
+    } else {
+      errorMessage = `Error del servidor: ${error.status} - ${error.statusText}`;
+      console.error('Respuesta del servidor:', error.error);
+    }
+    return throwError(() => new Error(errorMessage));
+  }
+}
