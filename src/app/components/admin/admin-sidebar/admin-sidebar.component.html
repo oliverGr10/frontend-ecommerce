@@ -11,7 +11,7 @@
   <nav class="mt-8">
     <ul class="space-y-2">
       <li>
-        <a routerLink="/admin/dashboard-admin" routerLinkActive="bg-gray-700" class="flex items-center px-4 py-3 text-white hover:text-black hover:bg-white transition-colors duration-200">
+        <a routerLink="/admin/dashboard-admin" routerLinkActive="bg-red-700" class="flex items-center px-4 py-3 text-white hover:text-black hover:bg-white transition-colors duration-200">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
           </svg>
@@ -27,7 +27,7 @@
         </a>
       </li>
       <li>
-        <a routerLink="/admin/sales" routerLinkActive="bg-gray-700" class="flex items-center px-4 py-3 text-white hover:text-black hover:bg-white transition-colors duration-200">
+        <a routerLink="/admin/sales" routerLinkActive="bg-white" class="flex items-center px-4 py-3 text-white hover:text-black hover:bg-white transition-colors duration-200">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
           </svg>
@@ -43,13 +43,15 @@
         </a>
       </li>
       <li>
-        <a routerLink="/admin/reports" routerLinkActive="bg-gray-700" class="flex items-center px-4 py-3 text-white hover:text-black hover:bg-white transition-colors duration-200">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+        <a (click)="onLogout()" class="flex items-center px-4 py-3 text-white hover:text-black hover:bg-white transition-colors duration-200">
+          <!-- Icono de logout -->
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h-4a2 2 0 01-2-2V5a2 2 0 012-2h4m3 8l4-4m0 0l-4-4m4 4H7" />
           </svg>
-          <span [ngClass]="{'hidden': !isExpanded}">Reports</span>
+          <span [ngClass]="{'hidden': !isExpanded}">Logout</span>
         </a>
       </li>
+    
     </ul>
   </nav>
 </aside>

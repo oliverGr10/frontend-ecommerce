@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { Suppliers } from './../../../interface/suppliers';
+import { Component, Inject } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+
 
 @Component({
   selector: 'app-delete-supplier-sheet',
@@ -10,8 +12,10 @@ import { MatDialogRef } from '@angular/material/dialog';
 })
 export class DeleteSupplierSheetComponent {
 
-  constructor(public dialogRef: MatDialogRef<DeleteSupplierSheetComponent>) {}
-
+  constructor(
+    public dialogRef: MatDialogRef<DeleteSupplierSheetComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: Suppliers
+  ) {}
   // Método para cerrar el modal y confirmar la eliminación
   confirmDelete(): void {
     this.dialogRef.close(true);  // Devuelve 'true' para confirmar la eliminación
