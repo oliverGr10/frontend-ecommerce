@@ -13,6 +13,13 @@
       </button>
     </div>
     <nav class="mt-10">
+      <div *ngIf="isLoggedIn" class="flex items-center space-x-4">
+      <a class="flex items-center px-6 py-2 mt-4 text-gray-100 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100"
+         (click)="openModal()">
+        <i class="fas fa-user mr-3 text-xl"></i>
+        Mi cuenta
+      </a>
+    </div>
       <a class="flex items-center px-6 py-2 mt-4 text-gray-100 hover:bg-gray-700 hover:bg-opacity-25 hover:text-gray-100"
          routerLink="/home" (click)="closeSidebar()">
         <i class="fas fa-home mr-3 text-xl"></i>
@@ -54,6 +61,28 @@
           (click)="toggleSidebar()">
     <i class="fas" [ngClass]="{'fa-bars': !isSidebarOpen, 'fa-arrow-left': isSidebarOpen}"></i>
   </button>
+
+ <!-- Modal para mostrar datos de la cuenta -->
+ <div *ngIf="isModalOpen" class="fixed z-10 inset-0 overflow-y-auto">
+  <div class="flex items-center justify-center min-h-screen">
+    <div class="bg-gray-800 rounded-lg shadow-xl overflow-hidden max-w-md w-full">
+      <div class="px-4 py-2 bg-gray-900 text-white flex justify-between">
+        <h3 class="text-lg font-medium">Mi Cuenta</h3>
+        <button (click)="closeModal()" class="text-white">&times;</button>
+      </div>
+      <div class="p-4">
+        <p><strong>Nombre:</strong> {{ user?.name }}</p>
+        <p><strong>Apellidos:</strong> {{ user?.lastName }}</p>
+        <p><strong>Email:</strong> {{ user?.email }}</p>
+        <p><strong>Documento:</strong> {{ user?.documentType }} - {{ user?.numDoc }}</p>
+      </div>
+      <div class="px-4 py-2 bg-gray-900 text-right">
+        <button (click)="logout()" class="px-4 py-2 bg-red-600 text-white rounded">Cerrar sesión</button>
+        <button (click)="closeModal()" class="px-4 py-2 bg-gray-600 text-white rounded">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
 
   <!-- Content -->
   <div class="flex-1 flex flex-col overflow-hidden" [ngClass]="{'ml-0': !isSidebarOpen, 'ml-64': isSidebarOpen}">

@@ -1,0 +1,9 @@
+.container{
+    scrollbar-width: none; /* Para Firefox */
+    -ms-overflow-style: none; /* Para IE y Edge */
+  
+    /* Para Chrome, Safari y Opera */
+    ::-webkit-scrollbar {
+        display: none;
+      }
+}

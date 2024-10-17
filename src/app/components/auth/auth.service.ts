@@ -92,4 +92,20 @@ export class AuthService {
     this.setLoggedIn(false);
     this.setUserRole('');
   }
+
+  getUserData() {
+    const token = localStorage.getItem('token');
+    if (token) {
+      const decodedToken = jwtDecode(token) as DecodedToken;
+      return {
+        name: decodedToken.fullName,
+        lastName: 'Apellido del usuario', 
+        email: decodedToken.sub,
+        documentType: 'DNI', 
+        numDoc: '12345678' 
+      };
+    }
+    return null; 
+  }
+  
 }

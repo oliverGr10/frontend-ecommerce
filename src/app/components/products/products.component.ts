@@ -1,18 +1,24 @@
 import { Component, OnInit } from '@angular/core';
-import { ProductListComponent } from '../product-list/product-list.component';
 import { CommonModule } from '@angular/common';
 import { RouterLink, RouterLinkActive } from '@angular/router';
+import { AuthService } from './../auth/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-products',
   standalone: true,
-  imports: [CommonModule, ProductListComponent, RouterLink, RouterLinkActive],
+  imports: [CommonModule, RouterLink, RouterLinkActive],
   templateUrl: './products.component.html',
   styleUrls: ['./products.component.scss']
 })
 export class ProductsComponent {
   isSidebarOpen = false;
   selectedSubCategory: string | null = null; // Variable para guardar la subcategoría seleccionada
+  isLoggedIn = false; 
+  user: any = {}; 
+  isModalOpen = false;
+
+  constructor(private authService: AuthService, private router: Router) {}
 
   categories = [
     { name: 'Hogar', isOpen: false, subCategories: ['Muebles', 'Decoración', 'Cocina'] },
@@ -53,6 +59,29 @@ export class ProductsComponent {
         product => product.subcategory === subCategory
       );
     }
+  }
+  
+  ngOnInit(): void {
+    this.isLoggedIn = this.authService.isLoggedIn();
+    if (this.isLoggedIn) {
+      this.user = this.authService.getUserData();
+    }
+  }
+
+  openModal() {
+    this.user = this.authService.getUserData();
+    this.isModalOpen = true;
+  }
+
+  closeModal() {
+    this.isModalOpen = false;
+  }
+
+  logout() {
+    this.authService.logout();
+    this.isLoggedIn = false;
+    this.closeModal();
+    this.router.navigate(['/login']);  // Redirige al login después de cerrar sesión
   }
 }
 
