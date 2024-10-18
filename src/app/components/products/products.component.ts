@@ -18,6 +18,8 @@ export class ProductsComponent {
   isLoggedIn = false;
   user: any = {};
   isModalOpen = false;
+  selectedProduct: any = null;
+  currentImageIndex = 0;
 
   constructor(private authService: AuthService, private router: Router) {}
 
@@ -76,6 +78,13 @@ export class ProductsComponent {
     this.isModalOpen = true;
   }
 
+  // Abrir modal con producto seleccionado
+  /*openModal(product: any) {
+    this.selectedProduct = product;
+    this.currentImageIndex = 0;
+    this.isModalOpen = true;
+  }*/
+
   closeModal() {
     this.isModalOpen = false;
   }
@@ -85,6 +94,19 @@ export class ProductsComponent {
     this.isLoggedIn = false;
     this.closeModal();
     this.router.navigate(['/login']);  // Redirige al login después de cerrar sesión
+  }
+  // Avanzar en el carrusel
+  nextImage() {
+    if (this.selectedProduct) {
+      this.currentImageIndex = (this.currentImageIndex + 1) % this.selectedProduct.images.length;
+    }
+  }
+
+  // Retroceder en el carrusel
+  previousImage() {
+    if (this.selectedProduct) {
+      this.currentImageIndex = (this.currentImageIndex - 1 + this.selectedProduct.images.length) % this.selectedProduct.images.length;
+    }
   }
 }
 
