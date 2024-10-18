@@ -13,6 +13,9 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 export class ProductsComponent {
   isSidebarOpen = false;
   selectedSubCategory: string | null = null; // Variable para guardar la subcategoría seleccionada
+  isModalOpen = false;
+  selectedProduct: any = null;
+  currentImageIndex = 0;
 
   categories = [
     { name: 'Hogar', isOpen: false, subCategories: ['Muebles', 'Decoración', 'Cocina'] },
@@ -54,6 +57,33 @@ export class ProductsComponent {
       );
     }
   }
+
+  // Abrir modal con producto seleccionado
+  openModal(product: any) {
+    this.selectedProduct = product;
+    this.currentImageIndex = 0;
+    this.isModalOpen = true;
+  }
+
+  // Cerrar modal
+  closeModal() {
+    this.isModalOpen = false;
+  }
+
+  // Avanzar en el carrusel
+  nextImage() {
+    if (this.selectedProduct) {
+      this.currentImageIndex = (this.currentImageIndex + 1) % this.selectedProduct.images.length;
+    }
+  }
+
+  // Retroceder en el carrusel
+  previousImage() {
+    if (this.selectedProduct) {
+      this.currentImageIndex = (this.currentImageIndex - 1 + this.selectedProduct.images.length) % this.selectedProduct.images.length;
+    }
+  }
+
 }
 
 
