@@ -12,8 +12,9 @@ import { Router } from '@angular/router';
   styleUrls: ['./products.component.scss']
 })
 export class ProductsComponent {
+
   isSidebarOpen = false;
-  selectedSubCategory: string | null = null; 
+  selectedSubCategory: string | null = null;
   isLoggedIn = false; 
   user: any = {}; 
   isModalOpen = false;
