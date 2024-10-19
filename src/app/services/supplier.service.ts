@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { catchError, Observable, throwError } from 'rxjs';
 import { Suppliers } from '../interface/suppliers';
 
@@ -18,7 +18,7 @@ export class SupplierService {
     return this.http.get<any[]>(this.apiUrl);
   }
   getSupplierById(id: number): Observable<Suppliers> {
-    return this.http.get<Suppliers>(`${this.apiUrl}/${id}`);  // apiUrl debe tener el endpoint para un solo proveedor
+    return this.http.get<Suppliers>(`${this.apiUrl}/${id}`); 
   }
 
   updateSupplier(supplier: Suppliers): Observable<Suppliers> {

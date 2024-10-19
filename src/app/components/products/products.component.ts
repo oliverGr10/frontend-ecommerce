@@ -13,7 +13,7 @@ import { Router } from '@angular/router';
 })
 export class ProductsComponent {
   isSidebarOpen = false;
-  selectedSubCategory: string | null = null; // Variable para guardar la subcategoría seleccionada
+  selectedSubCategory: string | null = null; 
   isLoggedIn = false; 
   user: any = {}; 
   isModalOpen = false;
