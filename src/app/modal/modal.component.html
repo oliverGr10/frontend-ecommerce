@@ -1,0 +1,25 @@
+<!-- Modal -->
+<div *ngIf="isModalOpen" class="modal-overlay">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>{{ selectedProduct?.name }}</h3>
+        <button (click)="closeModal()" class="close-button">&times;</button>
+      </div>
+  
+      <div class="modal-body">
+        <img [src]="selectedProduct?.image" alt="{{ selectedProduct?.name }}" class="product-image">
+        <p>{{ selectedProduct?.description }}</p>
+  
+        <!-- Opción 1: Mostrar precio sin formato -->
+        <p>Price: {{ selectedProduct?.price }}</p>
+  
+        
+      </div>
+  
+      <div class="modal-footer">
+        <button (click)="closeModal()" class="btn btn-danger">Cerrar</button>
+      </div>
+    </div>
+  </div>
+  
+  
