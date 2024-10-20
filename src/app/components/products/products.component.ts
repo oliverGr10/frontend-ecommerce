@@ -1,21 +1,25 @@
 import { Component, OnInit } from '@angular/core';
-import { ProductListComponent } from '../product-list/product-list.component';
 import { CommonModule } from '@angular/common';
 import { RouterLink, RouterLinkActive } from '@angular/router';
+import { AuthService } from './../auth/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-products',
   standalone: true,
-  imports: [CommonModule, ProductListComponent, RouterLink, RouterLinkActive],
+  imports: [CommonModule, RouterLink, RouterLinkActive],
   templateUrl: './products.component.html',
   styleUrls: ['./products.component.scss']
 })
 export class ProductsComponent {
+
   isSidebarOpen = false;
-  selectedSubCategory: string | null = null; // Variable para guardar la subcategoría seleccionada
+  selectedSubCategory: string | null = null;
+  isLoggedIn = false; 
+  user: any = {}; 
   isModalOpen = false;
-  selectedProduct: any = null;
-  currentImageIndex = 0;
+
+  constructor(private authService: AuthService, private router: Router) {}
 
   categories = [
     { name: 'Hogar', isOpen: false, subCategories: ['Muebles', 'Decoración', 'Cocina'] },
@@ -57,33 +61,29 @@ export class ProductsComponent {
       );
     }
   }
+  
+  ngOnInit(): void {
+    this.isLoggedIn = this.authService.isLoggedIn();
+    if (this.isLoggedIn) {
+      this.user = this.authService.getUserData();
+    }
+  }
 
-  // Abrir modal con producto seleccionado
-  openModal(product: any) {
-    this.selectedProduct = product;
-    this.currentImageIndex = 0;
+  openModal() {
+    this.user = this.authService.getUserData();
     this.isModalOpen = true;
   }
 
-  // Cerrar modal
   closeModal() {
     this.isModalOpen = false;
   }
 
-  // Avanzar en el carrusel
-  nextImage() {
-    if (this.selectedProduct) {
-      this.currentImageIndex = (this.currentImageIndex + 1) % this.selectedProduct.images.length;
-    }
+  logout() {
+    this.authService.logout();
+    this.isLoggedIn = false;
+    this.closeModal();
+    this.router.navigate(['/login']);  // Redirige al login después de cerrar sesión
   }
-
-  // Retroceder en el carrusel
-  previousImage() {
-    if (this.selectedProduct) {
-      this.currentImageIndex = (this.currentImageIndex - 1 + this.selectedProduct.images.length) % this.selectedProduct.images.length;
-    }
-  }
-
 }
 
 

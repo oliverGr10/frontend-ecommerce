@@ -1,4 +1,5 @@
 <div class="bg-gray-900 text-white min-h-screen">
+
   <header class="p-4 bg-gray-800 text-white">
     <nav class="flex flex-col md:flex-row justify-between items-center">
       <!-- Logo and Brand -->
@@ -11,8 +12,8 @@
   
       <!-- Navigation Links -->
       <ul class="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-6 text-base md:text-lg mb-4 md:mb-0">
-        <li><a href="#" class="text-red-500 hover:text-red-400">Inicio</a></li>
-        <li><a href="#about-home" class="hover:text-gray-300">Sobre Nosotros</a></li>
+        <li><a routerLink="/home" class="text-red-500 hover:text-red-400">Inicio</a></li>
+        <li><a (click)="goToSection('about-home')" class="hover:text-gray-300">Sobre Nosotros</a></li>
         <li><a routerLink="/productos" class="hover:text-gray-300">Productos</a></li>
       </ul>
   
@@ -44,14 +45,16 @@
         <a *ngIf="!isLoggedIn" (click)="openLoginDialog()" class="hover:text-gray-300 cursor-pointer">Iniciar Sesión</a>
 
   <!-- Mostrar iconos útiles tras autenticación -->
-      <div *ngIf="isLoggedIn" class="flex items-center space-x-4">
-        <a routerLink="/profile" class="hover:text-gray-300">
-          <i class="fas fa-user text-2xl"></i> <!-- Icono de perfil -->
-        </a>
-        <a routerLink="/orders" class="hover:text-gray-300">
-          <i class="fas fa-box text-2xl"></i> <!-- Icono de órdenes -->
-        </a>
-      </div>
+  <div *ngIf="isLoggedIn" class="flex items-center space-x-4">
+    <a (click)="openModal()" class="hover:text-gray-300">
+      <i class="fas fa-user text-2xl"></i> <!-- Icono de perfil -->
+    </a>
+    <a (click)="openOrderDialog()" class="hover:text-gray-300">
+      <i class="fas fa-box text-2xl"></i> <!-- Icono de órdenes -->
+    </a>    
+    
+  </div>
+  
         <svg 
           (click)="openCartDialog()" 
           xmlns="http://www.w3.org/2000/svg" 
@@ -68,6 +71,33 @@
       </div>
     </nav>
   </header>
+
+   <!-- Modal para mostrar datos de la cuenta -->
+   <div *ngIf="isModalOpen" class="fixed z-10 inset-0 overflow-y-auto">
+    <div class="flex items-center justify-center min-h-screen">
+      <div class="bg-gray-800 rounded-lg shadow-xl overflow-hidden max-w-md w-full">
+        <div class="px-4 py-2 bg-gray-900 text-white flex justify-between">
+          <h3 class="text-lg font-medium">Mi Cuenta</h3>
+          <button (click)="closeModal()" class="text-white">&times;</button>
+        </div>
+        <div class="p-4">
+          <p><strong>Nombre:</strong> {{ user?.name }}</p>
+          <p><strong>Apellidos:</strong> {{ user?.lastName }}</p>
+          <p><strong>Email:</strong> {{ user?.email }}</p>
+          <p><strong>Documento:</strong> {{ user?.documentType }} - {{ user?.numDoc }}</p>
+        </div>
+        <div class="px-4 py-2 bg-gray-600 text-right">
+          <button (click)="logout()" class="px-4 py-2 bg-red-600 text-white rounded">Cerrar sesión</button>
+          <button (click)="closeModal()" class="px-4 py-2 bg-gray-600 text-white rounded">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
   <main class="container mx-auto px-4 py-8">
     <section>
       <app-carrousel-home></app-carrousel-home>
