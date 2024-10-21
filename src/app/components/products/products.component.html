@@ -90,8 +90,10 @@
       <div class="container mx-auto px-6 py-8">
         <h2 class="text-2xl font-bold mb-6">Productos</h2>
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-          <div *ngFor="let product of filteredProducts" class="bg-gray-800 rounded-lg shadow-lg overflow-hidden transition duration-300 ease-in-out transform hover:-translate-y-1 hover:shadow-xl" (click)="openModal(product)">
-            <img [src]="product.image" alt="{{ product.name }}" class="w-full h-48 object-cover">
+          <div *ngFor="let product of filteredProducts" 
+          class="bg-gray-800 rounded-lg shadow-lg overflow-hidden transition duration-300 ease-in-out transform hover:-translate-y-1 hover:shadow-xl" 
+          >
+            <img [src]="product.image" alt="{{ product.name }}" class="w-full h-48 object-cover" (click)="isProductModal(product)">
             <div class="p-4">
               <h3 class="text-lg font-semibold">{{ product.name }}</h3>
               <p class="text-gray-400 mt-2">${{ product.price }}</p>
@@ -106,7 +108,9 @@
     </main>
   </div>
 
+  <app-modal *ngIf="isProductModalOpen" 
+  [selectedProduct]="selectedProduct" 
+  (close)="closeProductModal()">
+</app-modal>
 
-    
-  
 </div>

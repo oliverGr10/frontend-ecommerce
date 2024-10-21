@@ -1,9 +1,9 @@
 <!-- Modal -->
-<div *ngIf="isModalOpen" class="modal-overlay">
+<div *ngIf="isProductModalOpen" class="modal-overlay">
     <div class="modal-content">
       <div class="modal-header">
         <h3>{{ selectedProduct?.name }}</h3>
-        <button (click)="closeModal()" class="close-button">&times;</button>
+        <button (click)="closeProductModal()" class="close-button">&times;</button>
       </div>
   
       <div class="modal-body">
@@ -17,7 +17,7 @@
       </div>
   
       <div class="modal-footer">
-        <button (click)="closeModal()" class="btn btn-danger">Cerrar</button>
+        <button (click)="closeProductModal()" class="btn btn-danger">Cerrar</button>
       </div>
     </div>
   </div>
