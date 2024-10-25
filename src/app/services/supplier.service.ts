@@ -3,11 +3,12 @@ import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http
 import { catchError, Observable, throwError } from 'rxjs';
 import { Suppliers } from '../interface/suppliers';
 
+
 @Injectable({
   providedIn: 'root'
 })
 export class SupplierService {
-  private apiUrl = 'http://localhost:8081/api/v1/suppliers';
+  private apiUrl = 'http://localhost:8085/api/v1/suppliers';
 
   constructor(private http: HttpClient) { }
 
@@ -15,10 +16,15 @@ export class SupplierService {
     return this.http.post(this.apiUrl, supplier);
   }
   getSuppliers(): Observable<Suppliers[]> {
-    return this.http.get<any[]>(this.apiUrl);
+    return this.http.get<Suppliers[]>(this.apiUrl).pipe(
+      catchError(this.handleError)
+    );
   }
+
   getSupplierById(id: number): Observable<Suppliers> {
-    return this.http.get<Suppliers>(`${this.apiUrl}/${id}`); 
+    return this.http.get<Suppliers>(`${this.apiUrl}/${id}`).pipe(
+      catchError(this.handleError)
+    );
   }
 
   updateSupplier(supplier: Suppliers): Observable<Suppliers> {
@@ -34,6 +40,12 @@ export class SupplierService {
   }
   deleteSupplier(id: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/${id}`).pipe(
+      catchError(this.handleError)
+    );
+  }
+  getSupplierByName(name: string): Observable<Suppliers[]> {
+    const url = `${this.apiUrl}/byName/${name}`;
+    return this.http.get<Suppliers[]>(url).pipe(
       catchError(this.handleError)
     );
   }

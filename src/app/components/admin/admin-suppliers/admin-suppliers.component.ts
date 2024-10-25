@@ -10,6 +10,9 @@ import { Suppliers } from '../../../interface/suppliers';
 import { SupplierService } from '../../../services/supplier.service';
 import { CommonModule } from '@angular/common';
 import Swal from 'sweetalert2';
+import { debounceTime, distinctUntilChanged} from 'rxjs/operators';
+import { Subject } from 'rxjs';
+
 
 
 @Component({
@@ -21,29 +24,56 @@ import Swal from 'sweetalert2';
 })
 export class AdminSuppliersComponent implements OnInit {
   suppliers: Suppliers[] = [];
+  filteredSuppliers: Suppliers[] = [];
+  searchTerm$ = new Subject<string>();
 
   constructor(
     private dialog: MatDialog,
     private supplierService: SupplierService,
-    private cdr: ChangeDetectorRef  // Corregido: usamos 'cdr' en lugar de 'change'
+    private cdr: ChangeDetectorRef 
   ) {}
 
   ngOnInit() {
     this.loadSuppliers();
+    this.searchTerm$.pipe(
+      debounceTime(300), 
+      distinctUntilChanged() 
+    ).subscribe(term => {
+      this.filterSuppliers(term);
+    });
   }
 
   loadSuppliers() {
     this.supplierService.getSuppliers().subscribe({
       next: (data) => {
         this.suppliers = this.sortSuppliers(data);
-        console.log('Proveedores obtenidos:', this.suppliers);
-        this.cdr.detectChanges(); // Corregido: usamos 'cdr' en lugar de 'change'
+        this.filteredSuppliers = [...this.suppliers];
+        this.cdr.detectChanges(); 
       },
       error: (error) => {
         console.log('Error al obtener proveedores:', error);
       }
     });
   }
+   
+    onSearch(event: any) {
+      const term = event.target.value.toLowerCase().trim();
+      this.filterSuppliers(term);
+    }
+    
+    filterSuppliers(term: string) {
+      if (!term) {
+        // Si no hay término de búsqueda, mostrar todos los proveedores
+        this.filteredSuppliers = [...this.suppliers];
+      } else {
+        // Filtrar los proveedores que coincidan con el término
+        this.filteredSuppliers = this.suppliers.filter(supplier => 
+          supplier.name?.toLowerCase().includes(term) ||
+          supplier.email?.toLowerCase().includes(term) ||
+          supplier.phone?.toLowerCase().includes(term)
+        );
+      }
+    }
 
   openAddSuppliersSheet() {
     const dialogRef = this.dialog.open(AddSuppliersComponent, {
@@ -53,8 +83,7 @@ export class AdminSuppliersComponent implements OnInit {
 
     dialogRef.componentInstance.proveedorAgregado.subscribe((newSupplier: Suppliers) => {
       this.suppliers = this.sortSuppliers([...this.suppliers, newSupplier]);
-      console.log('Proveedor agregado:', newSupplier);
-      console.log('Lista actualizada:', this.suppliers);
+      this.filteredSuppliers = [...this.suppliers];
       this.cdr.detectChanges(); // Corregido: usamos 'cdr' en lugar de 'change'
     });
   }
@@ -83,7 +112,9 @@ export class AdminSuppliersComponent implements OnInit {
         const index = this.suppliers.findIndex(s => s.id === result.id);
         if (index !== -1) {
           this.suppliers[index] = result;
-          this.suppliers = [...this.suppliers]; // Trigger change detection
+          this.suppliers = [...this.suppliers]; 
+          this.filteredSuppliers = [...this.suppliers];// Trigger change detection
+          this.cdr.detectChanges();
         }
       }
     });
@@ -93,18 +124,21 @@ export class AdminSuppliersComponent implements OnInit {
       width: '400px',
       data: supplier
     });
-
+  
     dialogRef.afterClosed().subscribe(result => {
       if (result === true) {
         this.supplierService.deleteSupplier(supplier.id).subscribe({
           next: () => {
+            
             this.suppliers = this.suppliers.filter(s => s.id !== supplier.id);
+            
+            this.filteredSuppliers = [...this.suppliers];
             Swal.fire({
               title: 'Proveedor eliminado',
               html: `El proveedor <span style="color: #d32f2f; font-weight: bold;">${supplier.name}</span> ha sido eliminado.`,
               icon: 'success',
-              timer: 2000, // El mensaje se mostrará durante 2 segundos
-              showConfirmButton: false,  // Sin botón de confirmación
+              timer: 2000,
+              showConfirmButton: false,
             });
           },
           error: (error) => {
@@ -121,4 +155,5 @@ export class AdminSuppliersComponent implements OnInit {
       }
     });
   }
+  
 }

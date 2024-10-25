@@ -154,8 +154,7 @@ export class AddSuppliersComponent {
   }
   onFileSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
-    const file = input?.files?.[0]; // Aquí accedes a los archivos seleccionados
-  
+    const file = input?.files?.[0]; 
     if (!file) {
 
       this.fileUploadError = true;
@@ -163,7 +162,7 @@ export class AddSuppliersComponent {
       return;
     }
   
-    const validImageTypes = ['image/jpeg', 'image/png', 'image/gif'];
+    const validImageTypes = ['image/jpeg', 'image/png', 'image/gif','image/avif'];
     if (!validImageTypes.includes(file.type)) {
       Swal.fire({
         icon: 'error',

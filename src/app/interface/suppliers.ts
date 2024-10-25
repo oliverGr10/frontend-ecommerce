@@ -1,7 +1,7 @@
 
  export interface Suppliers {
     id:number;
-    name?: string;
+    name: string;
     contact: string;
     phone: string;
     email: string;

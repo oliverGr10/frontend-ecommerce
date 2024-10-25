@@ -1,9 +1,9 @@
 <!-- Contenedor del sheet lateral -->
 <div class="fixed inset-y-0 font-sans right-0 w-1/3 bg-white shadow-lg z-50 overflow-y-auto transition-transform transform translate-x-0" id="productSheet">
     <!-- Botón para cerrar -->
-    <div class="p-4 flex justify-between items-center border-b">
-        <h2 class="text-xl font-bold">Agregar Nuevo Producto</h2>
-        <button (click)="cerrarHoja($event)" class="text-gray-500 hover:text-gray-700 focus:outline-none" id="closeButton">
+    <div class="p-4 flex justify-between  bg-[#052339] items-center border-b">
+        <h2 class="text-xl text-white font-bold">Agregar Nuevo Producto</h2>
+        <button (click)="cerrarHoja()" class="text-gray-500 hover:text-gray-700 focus:outline-none" id="closeButton">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
             </svg>
@@ -11,90 +11,201 @@
     </div>
 
     <!-- Formulario -->
-    <form class="p-6 space-y-6">
+    <form [formGroup]="productForm" (ngSubmit)="onSubmit()" class="p-6 space-y-6">
+        <!-- Nombre del Producto -->
         <div class="relative">
-            <input name="nombre" id="nombre" placeholder=" " class="peer w-full px-4 py-2 border border-[#1E293B] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#052339] placeholder-transparent">
+            <input 
+                formControlName="name" 
+                id="name" 
+                placeholder=" " 
+                class="peer w-full px-4 py-2 border border-[#1E293B] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#052339] placeholder-transparent"
+                [ngClass]="{'border-red-500': productForm.get('name')?.touched && productForm.get('name')?.invalid}">
             <label class="absolute left-4 top-1 bg-white text-gray-600 transition-transform transform -translate-y-3 scale-75 origin-top-left peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:text-gray-800">
                 Nombre del Producto
             </label>
+            <div *ngIf="productForm.get('name')?.touched && productForm.get('name')?.invalid" class="text-red-500 text-sm mt-1">
+                {{ getErrorMessage('name') }}
+            </div>
         </div>
 
+        <!-- Descripción -->
         <div class="relative">
-            <textarea name="descripcion" id="descripcion" placeholder=" " rows="4" class="peer mt-2 w-full px-4 py-2 border border-[#1E293B] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#052339] placeholder-transparent"></textarea>
+            <textarea 
+                formControlName="description" 
+                id="description" 
+                placeholder=" " 
+                rows="4" 
+                class="peer mt-2 w-full px-4 py-2 border border-[#1E293B] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#052339] placeholder-transparent"
+                [ngClass]="{'border-red-500': productForm.get('description')?.touched && productForm.get('description')?.invalid}">
+            </textarea>
             <label class="absolute left-4 top-1 bg-white text-gray-600 transition-transform transform -translate-y-3 scale-75 origin-top-left peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:text-gray-800 mt-2">
                 Descripción
             </label>
-        </div>
-
-        <div class="grid grid-cols-2 gap-4">
-            <div class="relative">
-                <label for="precio" class="block text-sm font-semibold text-gray-600">Precio</label>
-                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <span class="text-gray-500 mt-7">$</span>
-                </div>
-                <input name="precio" id="precio" type="text" placeholder="120.00"
-                       class="mt-2 block w-full pl-7 pr-2 border border-[#1E293B] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#052339]">
-            </div>
-
-            <div class="relative">
-                <label for="categoria_id" class="block text-sm font-semibold text-gray-600">Categoría</label>
-                <select name="categoria_id" id="categoria_id" class="mt-2 block w-full rounded-lg border-[#1E293B] focus:outline-none focus:ring-2 focus:ring-[#052339]">
-                    <option value="">Seleccionar categoría</option>
-                    <option value="1">Laptops</option>
-                    <option value="2">Smartphones</option>
-                </select>
+            <div *ngIf="productForm.get('description')?.touched && productForm.get('description')?.invalid" class="text-red-500 text-sm mt-1">
+                {{ getErrorMessage('description') }}
             </div>
         </div>
 
-        <div class="grid grid-cols-2 gap-4">
-            <div class="relative">
-                <label for="proveedor_id" class="block text-sm font-semibold text-gray-600">Proveedor</label>
-                <select name="proveedor_id" id="proveedor_id" class="mt-2 block w-full rounded-lg border-[#1E293B] focus:outline-none focus:ring-2 focus:ring-[#052339]">
-                    <option value="">Seleccionar proveedor</option>
-                    <option value="1">Apple</option>
-                    <option value="2">Samsung</option>
-                </select>
+        <!-- Precio -->
+        <div class="relative">
+            <label for="price" class="block text-sm font-semibold text-gray-600">Precio</label>
+            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <span class="text-gray-500 mt-7">$</span>
             </div>
-            <div class="relative">
-                <label for="sku" class="block text-sm font-semibold text-gray-600">SKU</label>
-                <input name="sku" id="sku" placeholder="MBP-M2-2023 " class="mt-2 block w-full px-4 py-2 border border-[#1E293B] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#052339]">
+            <input 
+                formControlName="price" 
+                id="price" 
+                type="number" 
+                step="0.01" 
+                placeholder="120.00" 
+                class="mt-2 block w-full pl-7 pr-2 border border-[#1E293B] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#052339]"
+                [ngClass]="{'border-red-500': productForm.get('price')?.touched && productForm.get('price')?.invalid}">
+            <div *ngIf="productForm.get('price')?.touched && productForm.get('price')?.invalid" class="text-red-500 text-sm mt-1">
+                {{ getErrorMessage('price') }}
             </div>
         </div>
+
+        <!-- Categoría -->
+        <div class="relative">
+            <label for="categoryId" class="block text-sm font-semibold text-gray-600">Categoría</label>
+            <select 
+                formControlName="categoryId" 
+                id="categoryId" 
+                class="mt-2 block w-full rounded-lg border-[#1E293B] focus:outline-none focus:ring-2 focus:ring-[#052339]"
+                [ngClass]="{'border-red-500': productForm.get('categoryId')?.touched && productForm.get('categoryId')?.invalid}">
+                <option value="">Seleccionar categoría</option>
+                <option *ngFor="let category of categories" [value]="category.id">
+                    {{category.name}}
+                </option>
+            </select>
+            <div *ngIf="productForm.get('categoryId')?.touched && productForm.get('categoryId')?.invalid" class="text-red-500 text-sm mt-1">
+                {{ getErrorMessage('categoryId') }}
+            </div>
+        </div>
+
+        <!-- Proveedor -->
+        <div class="relative">
+            <label for="supplierId" class="block text-sm font-semibold text-gray-600">Proveedor</label>
+            <select 
+                formControlName="supplierId" 
+                id="supplierId" 
+                class="mt-2 block w-full rounded-lg border-[#1E293B] focus:outline-none focus:ring-2 focus:ring-[#052339]"
+                [ngClass]="{'border-red-500': productForm.get('supplierId')?.touched && productForm.get('supplierId')?.invalid}">
+                <option value="">Seleccionar proveedor</option>
+                <option *ngFor="let supplier of suppliers" [value]="supplier.id">
+                    {{supplier.name}}
+                </option>
+            </select>
+            <div *ngIf="productForm.get('supplierId')?.touched && productForm.get('supplierId')?.invalid" class="text-red-500 text-sm mt-1">
+                {{ getErrorMessage('supplierId') }}
+            </div>
+        </div>
+
+        <app-image-upload-progress [imageCount]="selectedImages.length"></app-image-upload-progress>
 
         <!-- Campo para arrastrar imagen -->
-        <div class="border-2 border-dashed border-gray-300 rounded-lg p-6 flex items-center justify-center cursor-pointer">
-            <input type="file" id="imagen_url" class="hidden" accept="image/*">
-            <div class="text-center">
-                <!-- Ícono de imagen -->
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-12 h-12 mx-auto mb-2 text-gray-400">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M16 12.498a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z" />
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M21 12.75V6a2.25 2.25 0 00-2.25-2.25H5.25A2.25 2.25 0 003 6v6.75M21 12.75l-5.25 5.25m0 0L15 21m5.25-5.25h-5.25V6h5.25a2.25 2.25 0 012.25 2.25v8.25zM3 6l5.25 5.25M3 12.75h5.25m0 0L3 21h12m0-8.25H3" />
+        <div 
+            class="relative border-2 border-dashed border-gray-300 rounded-lg p-6 cursor-pointer transition-all duration-300"
+            (click)="fileInput.click()"
+            [ngClass]="{
+                'border-blue-500 bg-blue-50': imagePreviewUrls.length > 0 && selectedImages.length < 3,
+                'border-green-500 bg-green-50': selectedImages.length === 3
+            }">
+            
+            <!-- Overlay de procesamiento -->
+            <div *ngIf="isProcessingImage" 
+                 class="absolute inset-0 bg-black bg-opacity-50 rounded-lg flex items-center justify-center">
+                <div class="text-white flex flex-col items-center">
+                    <svg class="animate-spin h-8 w-8 mb-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    <span>Procesando imagen...</span>
+                </div>
+            </div>
+    
+            <input 
+                #fileInput
+                type="file" 
+                accept="image/*"
+                multiple
+                class="hidden" 
+                (change)="handleImageUpload($event)">
+            
+            <!-- Estado inicial -->
+            <div *ngIf="imagePreviewUrls.length === 0" class="text-center">
+                <svg xmlns="http://www.w3.org/2000/svg" 
+                     class="w-12 h-12 mx-auto mb-2 text-gray-400" 
+                     fill="none" 
+                     viewBox="0 0 24 24" 
+                     stroke="currentColor">
+                    <path stroke-linecap="round" 
+                          stroke-linejoin="round" 
+                          d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
                 </svg>
-                <p class="text-gray-600">Arrastra tu imagen aquí o haz clic para subir</p>
+                <p class="text-gray-600">Arrastra tus imágenes aquí o haz clic para subir</p>
+                <p class="text-sm text-gray-500">{{selectedImages.length}}/3 imágenes subidas</p>
+            </div>
+    
+            <!-- Preview de imágenes -->
+            <div *ngIf="imagePreviewUrls.length > 0" 
+                 class="flex flex-wrap gap-4">
+                <div *ngFor="let url of imagePreviewUrls; let i = index" 
+                     class="relative group">
+                    <img [src]="url" 
+                         alt="Preview" 
+                         class="w-24 h-24 object-cover rounded-lg transition-all duration-300 group-hover:scale-105">
+                    
+                    <!-- Botón de eliminar -->
+                    <button 
+                        type="button"
+                        (click)="removeImage(i); $event.stopPropagation()"
+                        class="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center transform transition-all duration-300 hover:scale-110 hover:bg-red-600">
+                        ×
+                    </button>
+                    
+                    <!-- Indicador de número -->
+                    <div class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white px-2 py-0.5 rounded-full text-xs">
+                        {{i + 1}}/3
+                    </div>
+                </div>
+    
+                <!-- Indicador de espacios restantes -->
+                <div *ngFor="let empty of [].constructor(3 - imagePreviewUrls.length)" 
+                     class="w-24 h-24 border-2 border-dashed border-gray-300 rounded-lg flex items-center justify-center">
+                    <span class="text-gray-400 text-2xl">+</span>
+                </div>
             </div>
         </div>
-        
-
-        <div class="grid grid-cols-3 gap-4">
-            <div class="relative">
-                <label for="cantidad" class="block text-sm font-semibold text-gray-600">Cantidad Inicial</label>
-                <input name="cantidad" id="cantidad" type="number" placeholder="20"
-                       class="mt-2 block w-full px-4 py-2 border border-[#1E293B] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#052339]">
-            </div>
-            <div class="relative">
-                <label for="ubicacion" class="block text-sm font-semibold text-gray-600">Ubicación</label>
-                <input name="ubicacion" id="ubicacion" placeholder="Almacen Samsung"
-                       class="mt-2 block w-full px-4 py-2 border border-[#1E293B] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#052339]">
-            </div>
-            <div class="relative">
-                <label for="nivel_minimo" class="block text-sm font-semibold text-gray-600">Nivel Mínimo</label>
-                <input name="nivel_minimo" id="nivel_minimo" type="number" placeholder="2"
-                       class="mt-2 block w-full px-4 py-2 border border-[#1E293B] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#052339]">
-            </div>
+    
+        <!-- Mensaje de estado -->
+        <div class="mt-4 text-center" [ngClass]="{
+            'text-yellow-600': selectedImages.length < 3,
+            'text-green-600': selectedImages.length === 3
+        }">
+            <span *ngIf="selectedImages.length < 3">
+                Faltan {{ 3 - selectedImages.length }} imágenes por subir
+            </span>
+            <span *ngIf="selectedImages.length === 3">
+                ¡Todas las imágenes han sido cargadas!
+            </span>
         </div>
-
-        <button type="submit" class="w-full bg-[#1E293B] text-white font-bold py-2 rounded-lg hover:bg-[#052339]">
-            Guardar Producto
+    
+        <!-- Botón para guardar -->
+        <button 
+        type="submit" 
+        class="w-full mt-4 bg-[#1E293B] text-white font-bold py-2 rounded-lg transition-all duration-300 hover:bg-[#052339] disabled:opacity-50 disabled:cursor-not-allowed"
+        [disabled]="!productForm.valid || isLoading || selectedImages.length !== 3">
+        <span *ngIf="isLoading" class="flex items-center justify-center">
+            <svg class="animate-spin h-5 w-5 mr-3" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" fill="none"/>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"/>
+            </svg>
+            Guardando...
+        </span>
+        <span *ngIf="!isLoading">
+            {{ selectedImages.length === 3 ? 'Guardar Producto' : 'Faltan ' + (3 - selectedImages.length) + ' imágenes' }}
+        </span>
         </button>
     </form>
 </div>

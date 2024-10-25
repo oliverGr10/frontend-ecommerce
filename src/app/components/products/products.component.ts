@@ -28,13 +28,13 @@ export class ProductsComponent {
   ];
 
   products = [
-    { name: 'Producto 1', price: 19.99, image: 'https://via.placeholder.com/300x200', category: 'Hogar', subcategory: 'Muebles' },
-    { name: 'Producto 2', price: 29.99, image: 'https://via.placeholder.com/300x200', category: 'Electrónica', subcategory: 'Televisores' },
-    { name: 'Producto 3', price: 39.99, image: 'https://via.placeholder.com/300x200', category: 'Ropa', subcategory: 'Camisetas' },
-    // otros productos...
+    { name: 'Muebles de Comedor', price: 19.99, image: 'https://images.unsplash.com/photo-1704040686446-428673c1c887?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', category: 'Hogar', subcategory: 'Muebles' },
+    { name: 'Laptop', price: 29.99, image: 'https://images.unsplash.com/photo-1487017159836-4e23ece2e4cf?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', category: 'Electrónica', subcategory: 'Televisores' },
+    { name: 'Camiseta ', price: 39.99, image: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?q=80&w=1780&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', category: 'Ropa', subcategory: 'Camisetas' },
+    
   ];
 
-  filteredProducts = this.products; // Lista de productos filtrados
+  filteredProducts = this.products; 
 
   toggleSidebar() {
     this.isSidebarOpen = !this.isSidebarOpen;
@@ -82,7 +82,7 @@ export class ProductsComponent {
     this.authService.logout();
     this.isLoggedIn = false;
     this.closeModal();
-    this.router.navigate(['/login']);  // Redirige al login después de cerrar sesión
+    this.router.navigate(['/login']);
   }
 }
 

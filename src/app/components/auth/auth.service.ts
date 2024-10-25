@@ -19,7 +19,7 @@ interface DecodedToken {
 })
 
 export class AuthService {
-  private apiUrl = 'http://localhost:8081/api/v1/auth';
+  private apiUrl = 'http://localhost:8085/api/v1/auth';
   private loggedIn = false;
   private userRole: string | null = null;
 

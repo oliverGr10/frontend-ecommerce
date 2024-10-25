@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { Component, Inject } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { Product } from '../../../interface/products';
 
 @Component({
   selector: 'app-delete-product-iventory-sheet',
@@ -10,7 +11,9 @@ import { MatDialogRef } from '@angular/material/dialog';
 })
 export class DeleteProductIventorySheetComponent {
 
-  constructor(public dialogRef: MatDialogRef<DeleteProductIventorySheetComponent>) {}
+  constructor(public dialogRef: MatDialogRef<DeleteProductIventorySheetComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: Product
+  ) {}
 
   // Método para cerrar el modal y confirmar la eliminación
   confirmDelete(): void {
