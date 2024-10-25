@@ -65,12 +65,12 @@ export class ProductsComponent {
   ngOnInit(): void {
     this.isLoggedIn = this.authService.isLoggedIn();
     if (this.isLoggedIn) {
-      this.user = this.authService.getUserData();
+      this.user = this.authService.getUserRole();
     }
   }
 
   openModal() {
-    this.user = this.authService.getUserData();
+    this.user = this.authService.getUserRole();
     this.isModalOpen = true;
   }
 

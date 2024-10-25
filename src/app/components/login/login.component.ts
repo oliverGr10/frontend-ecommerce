@@ -1,23 +1,32 @@
 import { HttpClientModule } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { Router,} from '@angular/router';
+import { Router } from '@angular/router';
 import { MatDialogRef } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatIconModule } from '@angular/material/icon'; 
+import { MatIconModule } from '@angular/material/icon';
 import { AuthService } from '../auth/auth.service';
 import { loginSchema, LoginSchema } from '../auth/schema/login.schema';
 import { z } from 'zod';
 import { CommonModule } from '@angular/common';
 import Swal from 'sweetalert2';
+
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [MatFormFieldModule,MatInputModule,FormsModule,MatCheckboxModule,MatIconModule,HttpClientModule,CommonModule],
+  imports: [
+    MatFormFieldModule,
+    MatInputModule,
+    FormsModule,
+    MatCheckboxModule,
+    MatIconModule,
+    HttpClientModule,
+    CommonModule,
+  ],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  styleUrls: ['./login.component.css'],
 })
 export class LoginComponent {
   username: string = '';
@@ -30,30 +39,31 @@ export class LoginComponent {
     private dialogRef: MatDialogRef<LoginComponent>,
     private authService: AuthService
   ) {}
+
   onLogin(): void {
     this.errors = {};
     const loginData: LoginSchema = {
       username: this.username,
-      password: this.password
+      password: this.password,
     };
-  
+
     try {
       // Validar los datos usando Zod
       loginSchema.parse(loginData);
-  
+
       // Intentar iniciar sesión con los datos validados
       this.authService.login(loginData).subscribe(
-        response => {
+        (response) => {
           console.log('Inicio de sesión exitoso:', response);
-          if (response.role) {
+          if (response.token) {
             // Mostrar mensaje de éxito 
             Swal.fire({
               title: '¡Inicio de sesión exitoso!',
               text: `Bienvenido, ${this.username}`,
               icon: 'success',
-              showConfirmButton: false,  
-              timer: 2500,               
-              timerProgressBar: true,     
+              showConfirmButton: false,
+              timer: 2500,
+              timerProgressBar: true,
               willClose: () => {
                 // Redirigir después de que la alerta se cierre automáticamente
                 if (this.authService.isAdmin()) {
@@ -62,29 +72,29 @@ export class LoginComponent {
                   this.router.navigate(['/home']);
                 }
                 this.dialogRef.close(true);
-              }
+              },
             });
-          }  else {
-            // Mostrar mensaje de error si el rol no está definido
+          } else {
+            // Mostrar mensaje de error si el token no está definido
             Swal.fire({
               title: 'Error',
-              text: 'El rol del usuario no está definido en la respuesta.',
+              text: 'No se recibió un token de autenticación.',
               icon: 'error',
-              confirmButtonText: 'Aceptar'
+              confirmButtonText: 'Aceptar',
             });
           }
         },
-        error => {
+        (error) => {
           console.error('Error al iniciar sesión:', error);
-  
+
           // Cerrar el spinner de carga y mostrar mensaje de error
           Swal.close();
-  
+
           Swal.fire({
             title: 'Error',
             text: 'Error en el login. Revisa tus credenciales.',
             icon: 'error',
-            confirmButtonText: 'Aceptar'
+            confirmButtonText: 'Aceptar',
           });
         }
       );
@@ -96,17 +106,18 @@ export class LoginComponent {
             this.errors[err.path[0]] = err.message;
           }
         });
-  
+
         // Mostrar alerta de error de validación
         Swal.fire({
           title: 'Error de validación',
           text: 'Revisa los campos ingresados.',
           icon: 'error',
-          confirmButtonText: 'Aceptar'
+          confirmButtonText: 'Aceptar',
         });
       }
     }
   }
+
   onClose(): void {
     this.dialogRef.close();
   }
