@@ -8,7 +8,7 @@
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
         </svg>
       </div>
-      
+
       <!-- Botón para añadir nuevo producto -->
       <button (click)="openAddProductSheet()" class="bg-[#1E293B] hover:bg-[#052339] font-sans text-white px-4 py-2 rounded-md flex items-center">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -23,7 +23,7 @@
   <!-- Contenedor de la lista de productos con borde y sombra -->
   <div class="bg-white rounded-lg shadow-md overflow-hidden border border-gray-200">
     <h2 class="text-lg text-white font-sans font-semibold p-4 bg-[#1E293B] border-b border-gray-200">Product List</h2>
-   
+
     <table class="w-full">
       <thead class="bg-gray-50">
         <tr>
@@ -35,12 +35,13 @@
           <th class="px-6 py-3 text-left text-xs font-sans font-medium text-gray-500 uppercase tracking-wider">Type</th>
           <th class="px-6 py-3 text-left text-xs font-sans font-medium text-gray-500 uppercase tracking-wider">Price</th>
           <th class="px-6 py-3 text-left text-xs font-sans font-medium text-gray-500 uppercase tracking-wider">proveed</th>
+          <th class="px-6 py-3 text-left text-xs font-sans font-medium text-gray-500 uppercase tracking-wider">Stock</th>
           <th class="px-6 py-3 text-left text-xs font-sans font-medium text-gray-500 uppercase tracking-wider">Image</th>
           <th class="px-6 py-3 text-left text-xs font-sans font-medium text-gray-500 uppercase tracking-wider">Actions</th>
         </tr>
       </thead>
       <tbody class="bg-white divide-y divide-gray-200">
-        <tr class="hover:bg-gray-50" 
+        <tr class="hover:bg-gray-50"
             *ngFor="let producto of displayedProducts; trackBy: trackByProductId"
             #productRow>
             <td class="px-6 py-4 whitespace-nowrap">
@@ -86,11 +87,14 @@
                     <span class="text-gray-400">Sin proveedor</span>
                 </ng-template>
             </td>
+          <td class="px-6 py-4 font-sans whitespace-nowrap">
+            {{producto.inventory?.length}}
+          </td>
             <td class="px-6 py-4 font-sans whitespace-nowrap">
                 <div class="flex space-x-2">
                     <ng-container *ngIf="producto.images?.length; else noImages">
                         <ng-container *ngFor="let image of producto.images | slice:0:3">
-                          <app-imagen-url 
+                          <app-imagen-url
                           [imageUrl]="image?.imageBase64 ?? ''"
                           [alt]="producto.name">
                       </app-imagen-url>
@@ -103,7 +107,7 @@
             </td>
             <td class="px-6 py-4 text-right">
               <div class="flex justify-end space-x-2">
-          
+
                 <button  class="text-black hover:text-green-700" title="Edit Product">
                   <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                     <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
@@ -123,22 +127,22 @@
   <div class="flex justify-center mt-6 mb-6">
     <nav class="inline-flex items-center rounded-xl overflow-hidden shadow-lg bg-white p-1.5 gap-1.5">
       <!-- Botón Previous -->
-      <button 
-        (click)="goToPage(currentPage - 1)" 
+      <button
+        (click)="goToPage(currentPage - 1)"
         [disabled]="currentPage === 1"
         class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-600 transition-all duration-200 ease-in-out rounded-lg hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed group"
       >
-        <svg 
-          class="w-4 h-4 mr-2 transition-transform group-hover:-translate-x-0.5" 
-          fill="none" 
-          stroke="currentColor" 
+        <svg
+          class="w-4 h-4 mr-2 transition-transform group-hover:-translate-x-0.5"
+          fill="none"
+          stroke="currentColor"
           viewBox="0 0 24 24"
         >
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"></path>
         </svg>
         Prev
       </button>
-  
+
       <!-- Números de página -->
       <div class="flex items-center gap-1">
         <button *ngFor="let page of [].constructor(totalPages); let i = index"
@@ -152,18 +156,18 @@
           {{ i + 1 }}
         </button>
       </div>
-  
+
       <!-- Botón Next -->
-      <button 
-        (click)="goToPage(currentPage + 1)" 
+      <button
+        (click)="goToPage(currentPage + 1)"
         [disabled]="currentPage === totalPages"
         class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-600 transition-all duration-200 ease-in-out rounded-lg hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed group"
       >
         Next
-        <svg 
-          class="w-4 h-4 ml-2 transition-transform group-hover:translate-x-0.5" 
-          fill="none" 
-          stroke="currentColor" 
+        <svg
+          class="w-4 h-4 ml-2 transition-transform group-hover:translate-x-0.5"
+          fill="none"
+          stroke="currentColor"
           viewBox="0 0 24 24"
         >
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"></path>
