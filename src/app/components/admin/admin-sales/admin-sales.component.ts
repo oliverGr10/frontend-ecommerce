@@ -11,12 +11,13 @@ import { debounceTime, distinctUntilChanged, Subject } from 'rxjs';
 import { InventoryService } from '../../../services/inventory.service';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { Product } from '../../../interface/products';
+import { InventoryStatusComponent } from '../inventory-status/inventory-status.component';
 
 
 @Component({
   selector: 'app-admin-sales',
   standalone: true,
-  imports: [CommonModule,ReactiveFormsModule],
+  imports: [CommonModule,ReactiveFormsModule,InventoryStatusComponent],
   templateUrl: './admin-sales.component.html',
   styleUrl: './admin-sales.component.css'
 })
@@ -148,55 +149,7 @@ export class AdminSalesComponent implements OnInit {
       this.updateDisplayedInventory();
     }
   }
-  getInventoryStatus(item: any): string {
-    if (!item.available) {
-        return 'No disponible';
-    }
-    
-    const minStock = this.getProductMinStock(item.productId);
-    
-    if (item.quantity === 0) {
-        return 'Sin stock';
-    } else if (item.quantity > 0 && item.quantity < minStock) {
-        return `Bajo stock (Min: ${minStock})`;
-    } else if (item.quantity >= minStock) {
-        return 'Stock suficiente';
-    }
-    
-    return 'Estado desconocido';
-}
-  updateItemQuantity(item: Inventory, value: string) {
-    const newQuantity = parseInt(value, 10);
-    if (isNaN(newQuantity) || newQuantity < 0) {
-      return;
-    }
 
-    if (item.id) {
-      this.inventoryService.updateQuantity(item.id, newQuantity).subscribe({
-        next: (response) => {
-          const updatedItem = this.displayedInventory.find(i => i.id === item.id);
-          if (updatedItem) {
-            updatedItem.quantity = newQuantity;
-            const mainItem = this.inventario.find(i => i.id === item.id);
-            if (mainItem) {
-              mainItem.quantity = newQuantity;
-            }
-          }
-          this.cdr.detectChanges();
-        },
-        error: (error) => {
-          console.error('Error updating quantity:', error);
-        }
-      });
-    }
-  }
-
-  isValidQuantity(quantity: any): boolean {
-    return typeof quantity === 'number' && !isNaN(quantity);
-  }
-  getDisplayQuantity(item: Inventory): number {
-    return this.isValidQuantity(item.quantity) ? item.quantity : 0;
-  }
   openAddIventory() {
     const dialogRef = this.dialog.open(AddIventoryComponent, {
       width: '400px'

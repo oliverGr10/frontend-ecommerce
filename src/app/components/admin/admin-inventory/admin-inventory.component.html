@@ -87,9 +87,8 @@
                     <span class="text-gray-400">Sin proveedor</span>
                 </ng-template>
             </td>
-          <td class="px-6 py-4 font-sans whitespace-nowrap">
-            {{producto.inventory?.length}}
-          </td>
+            <td class=" font-sans whitespace-nowrap">
+              <app-inventory-status [product]="producto"></app-inventory-status>
             <td class="px-6 py-4 font-sans whitespace-nowrap">
                 <div class="flex space-x-2">
                     <ng-container *ngIf="producto.images?.length; else noImages">

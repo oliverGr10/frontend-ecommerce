@@ -1,5 +1,5 @@
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';  // Import MatDialog
-import { ChangeDetectorRef, Component, NgZone, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, NgZone, OnDestroy, OnInit } from '@angular/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ProductService } from '../../../services/product.service';
 import { CommonModule } from '@angular/common';
@@ -9,18 +9,19 @@ import { DeleteProductIventorySheetComponent } from '../delete-product-iventory-
 import { Product } from '../../../interface/products';
 import { SupplierService } from '../../../services/supplier.service';
 import { CategoryService } from '../../../services/category.service';
-import {debounceTime, distinctUntilChanged, Subject } from 'rxjs';
+import {debounceTime, distinctUntilChanged, Subject, takeUntil } from 'rxjs';
 import { ImagenUrlComponent } from '../imagen-url/imagen-url.component';
 import Swal from 'sweetalert2';
+import { InventoryStatusComponent } from '../inventory-status/inventory-status.component';
 
 @Component({
   selector: 'app-admin-inventory',
   standalone: true,
-  imports: [MatProgressSpinnerModule, CommonModule, AddProductIventorySheetComponent, EditProductIventorySheetComponent, DeleteProductIventorySheetComponent,ImagenUrlComponent],
+  imports: [MatProgressSpinnerModule, CommonModule, AddProductIventorySheetComponent, EditProductIventorySheetComponent, DeleteProductIventorySheetComponent,ImagenUrlComponent,InventoryStatusComponent],
   templateUrl: './admin-inventory.component.html',
   styleUrls: ['./admin-inventory.component.css']
 })
-export class AdminInventoryComponent implements OnInit {
+export class AdminInventoryComponent implements OnInit,OnDestroy  {
   productos: Product[] = [];
   categories: { [id: number]: string } = {};
   filteredProducts: Product[] = []; 
@@ -30,6 +31,7 @@ export class AdminInventoryComponent implements OnInit {
   itemsPerPage = 10;
   totalPages = Math.ceil(this.filteredProducts.length / this.itemsPerPage);
   displayedProducts: Product[] = [];
+  private destroy$ = new Subject<void>();
   
   constructor(
     private productService: ProductService,
@@ -42,11 +44,16 @@ export class AdminInventoryComponent implements OnInit {
   ) { } 
 
   ngOnInit(): void {
-    this.productService.products$.subscribe(products => {
+    this.productService.products$.pipe(
+      takeUntil(this.destroy$)
+    ).subscribe(products => {
+      this.ngZone.run(() => {
         this.productos = this.sortProducts(products);
         this.filteredProducts = [...this.productos];
         this.calculateTotalPages();
+        this.updateDisplayedProducts();
         this.cdr.detectChanges();
+      });
     });
 
     this.loadCategories();
@@ -58,6 +65,10 @@ export class AdminInventoryComponent implements OnInit {
     ).subscribe(term => {
         this.filterProducts(term);
     });
+}
+ngOnDestroy(): void {
+  this.destroy$.next();
+  this.destroy$.complete();
 }
 
 loadProducts(): void {

@@ -1,0 +1,8 @@
+<div class="flex flex-wrap gap-2 rounded-lg">
+    <div *ngFor="let status of inventoryStatuses" 
+         [class]="getStatusClasses(status.status)"
+         class="inline-flex items-center px-2.5 py-2 rounded-full text-xs font-medium">
+      <span [innerHTML]="getStatusIcon(status.status)" class="mr-1"></span>
+      {{ getStatusLabel(status.status) }} - {{ status.count }}
+    </div>
+  </div>

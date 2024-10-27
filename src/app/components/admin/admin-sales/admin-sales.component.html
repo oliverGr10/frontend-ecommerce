@@ -32,8 +32,6 @@
           <th class="px-6 py-3 text-xs font-medium text-gray-500 uppercase">Producto</th>
           <th class="px-6 py-3 text-xs font-medium text-gray-500 uppercase">Store</th>
           <th class="px-6 py-3 text-xs font-medium text-gray-500 uppercase">Code</th>
-          <th class="px-6 py-3 text-xs font-medium text-gray-500 uppercase">Cantidad</th>
-          <th class="px-6 py-3 text-xs font-medium text-gray-500 uppercase">Estado</th>
           <th class="px-6 py-3 text-xs font-medium text-gray-500 uppercase">Action</th>
         </tr>
       </thead>
@@ -43,18 +41,6 @@
           <td class="px-6 py-4">{{getProductName(item.productId)}}</td>
           <td class="px-6 py-4">{{getStoreName(item.storeId)}}</td>
           <td class="px-6 py-4">{{item.code}}</td>
-          <td class="px-6 py-4">{{ getDisplayQuantity(item) }}</td>
-          <td class="px-6 py-4">
-        <span [ngClass]="{
-            'px-2 py-1 rounded-full text-xs font-medium': true,
-            'bg-red-100 text-red-800': item.quantity === 0,
-            'bg-yellow-100 text-yellow-800': item.quantity > 0 && item.quantity < getProductMinStock(item.productId),
-            'bg-green-100 text-green-800': item.quantity >= getProductMinStock(item.productId),
-            'bg-gray-100 text-gray-800': !item.available
-        }">
-            {{getInventoryStatus(item)}}
-        </span>
-    </td>
           <td class="px-6 py-4">
             <div class="flex space-x-2">
               <button (click)="openEditIventory()" class="text-black hover:text-green-700" title="Edit Inventory">
