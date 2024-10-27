@@ -5,6 +5,7 @@ export interface Product {
   price: number;
   categoryId: number;
   supplierId: number;
+  minStock?: number;
   images: ProductImage[];
   orders?: number;
 }

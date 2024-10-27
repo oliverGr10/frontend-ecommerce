@@ -31,11 +31,12 @@ export class AdminInventoryComponent implements OnInit {
   totalPages = Math.ceil(this.filteredProducts.length / this.itemsPerPage);
   displayedProducts: Product[] = [];
   
-  constructor(private productService: ProductService, private dialog: MatDialog,
+  constructor(
+    private productService: ProductService,
+    private dialog: MatDialog,
     private categoryService: CategoryService,
     private supplierService: SupplierService,
     private cdr: ChangeDetectorRef,
-    
     private ngZone: NgZone
     
   ) { } 

@@ -1,75 +1,100 @@
-<div class="fixed inset-0 font-sans overflow-hidden z-50" aria-labelledby="slide-over-title" role="dialog" aria-modal="true">
-    <div class="absolute inset-0 overflow-hidden">
-      <div class="absolute inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
-  
-      <div class="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10">
-        <div class="pointer-events-auto relative w-screen max-w-md">
-          <div class="flex h-full flex-col overflow-y-scroll bg-white shadow-xl">
-            <div class="px-4 sm:px-6 bg-[#052339]">
-              <div class="flex items-start justify-between py-6">
-                <h2 class="text-xl font-bold text-white" id="slide-over-title">Inventario</h2>
-                <button (click)="cerrarHoja()" type="button" class="ml-3 rounded-md bg-white text-gray-400 hover:text-black focus:outline-none focus:ring-2 focus:ring-gray-900">
-                  <span class="sr-only">Cerrar panel</span>
-                  <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                  </svg>
-                </button>
+<div class="fixed inset-0 font-sans overflow-hidden z-50"  aria-labelledby="slide-over-title" role="dialog" aria-modal="true">
+  <div class="absolute inset-0 overflow-hidden">
+    <div class="absolute inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
+
+    <div class="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10">
+      <div class="pointer-events-auto relative w-screen max-w-md">
+        <div class="flex h-full flex-col overflow-y-scroll bg-white shadow-xl">
+          <!-- Header -->
+          <div class="px-4 sm:px-6 bg-[#052339]">
+            <div class="flex items-start justify-between py-6">
+              <h2 class="text-xl font-bold text-white" id="slide-over-title">Inventario</h2>
+              <button (click)="cerrarHoja($event)" type="button" class="ml-3 rounded-md bg-white text-gray-400 hover:text-black focus:outline-none focus:ring-2 focus:ring-gray-900">
+                <span class="sr-only">Cerrar panel</span>
+                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- Formulario -->
+          <div class="relative flex-1 px-4 sm:px-6">
+            <form [formGroup]="inventoryForm" (ngSubmit)="onSubmit()" class="space-y-6">
+              <!-- Producto -->
+              <div class="relative text-sm mt-8">
+                <mat-autocomplete #productAuto="matAutocomplete" 
+                  [displayWith]="displayFn"
+                  (opened)="onAutocompleteOpened()"
+                  (closed)="onAutocompleteClosed()"
+                  (optionSelected)="onProductSelected($event)">
+                  <mat-option *ngFor="let product of filteredProducts | async" [value]="product">
+                    {{product.name}}
+                  </mat-option>
+                </mat-autocomplete>
+                <input type="text" 
+                  formControlName="productSearch"
+                  [matAutocomplete]="productAuto"
+                  class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border appearance-none focus:outline-none focus:ring-0 peer"
+                  placeholder=" " />
+                <label class="absolute text-sm duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-[#052339] peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1">
+                  Producto
+                </label>
               </div>
-            </div>
-            <div class="relative flex-1 px-4 sm:px-6">
-              <form class="space-y-6 text-2xl">
-                <!-- Campo de ID del producto -->
-                <div class="relative text-sm mt-8">
-                    <input type="text" id="Producto" name="Producto" 
-                          class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border appearance-none focus:outline-none focus:ring-0 peer"
-                          placeholder=" " />
-                    <label for="producto" 
-                          class="absolute text-sm duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-[#052339] peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1">
-                      Producto
-                    </label>
-                  </div>
-                <!-- Campo de ID de la tienda -->
-                <div class="relative text-sm ">
-                    <input type="text" id="Almacen" name="Almacen" 
-                          class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border appearance-none focus:outline-none focus:ring-0 peer"
-                          placeholder=" " />
-                    <label for="almacen" 
-                          class="absolute text-sm duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-[#052339] peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1">
-                      Almacén
-                    </label>
-                  </div>
-                <!-- Campo de Código -->
-                <div class="relative text-sm ">
-                    <input type="text" id="Codigo" name="Codigo" 
-                          class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border appearance-none focus:outline-none focus:ring-0 peer"
-                          placeholder=" " />
-                    <label for="almacen" 
-                          class="absolute text-sm duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-[#052339] peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1">
-                          Código
-                    </label>
-                  </div>
-                <!-- Campo de Cantidad -->
-                <div class="relative text-sm ">
-                    <input type="text" id="Cantidad" name="Cantidad" 
-                          class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border appearance-none focus:outline-none focus:ring-0 peer"
-                          placeholder=" " />
-                    <label for="almacen" 
-                          class="absolute text-sm duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-[#052339] peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1">
-                          Cantidad
-                    </label>
-                  </div>
-                <!-- Botón de envío -->
-                <div>
-                    <button type="submit"
-                        class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-gray-700 hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900">
-                  Agregar 
-                </button>
-                </div>
-              </form>
-            </div>
+
+              <!-- Almacén -->
+              <div class="relative text-sm">
+                <mat-autocomplete #storeAuto="matAutocomplete"
+                  [displayWith]="displayFn"
+                  (opened)="onAutocompleteOpened()"
+                  (closed)="onAutocompleteClosed()"
+                  (optionSelected)="onStoreSelected($event)">
+                  <mat-option *ngFor="let store of filteredStores | async" [value]="store">
+                    {{store.name}}
+                  </mat-option>
+                </mat-autocomplete>
+                <input type="text"
+                  formControlName="storeSearch"
+                  [matAutocomplete]="storeAuto"
+                  class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border appearance-none focus:outline-none focus:ring-0 peer"
+                  placeholder=" " />
+                <label class="absolute text-sm duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-[#052339] peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1">
+                  Almacén
+                </label>
+              </div>
+
+              <!-- Código -->
+              <div class="relative text-sm">
+                <input type="text"
+                  formControlName="code"
+                  class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border appearance-none focus:outline-none focus:ring-0 peer"
+                  placeholder=" " readonly />
+                <label class="absolute text-sm duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-[#052339] peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1">
+                  Código
+                </label>
+              </div>
+
+              <!-- Cantidad -->
+              <div class="relative text-sm">
+                <input type="number"
+                  formControlName="quantity"
+                  class="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border appearance-none focus:outline-none focus:ring-0 peer"
+                  placeholder=" " />
+                <label class="absolute text-sm duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-[#052339] peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1">
+                  Cantidad
+                </label>
+              </div>
+
+              <!-- Botón submit -->
+              <button type="submit"
+                  [disabled]="!inventoryForm.valid"
+                  class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-gray-700 hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 disabled:opacity-50 disabled:cursor-not-allowed">
+                  Agregar
+              </button>
+            </form>
           </div>
         </div>
       </div>
     </div>
   </div>
-  
+</div>

@@ -1,15 +1,12 @@
 export interface Inventory {
-    id: number;
+    id?: number;
     productId: number;
     storeId: number;
     code: string;
     quantity: number;
+    available?: boolean; 
+    saleDetailDTO?: any; 
+    buyDetailDTO?: any; 
+    orderDetailDTO?: any; 
   }
   
- 
-  export interface CreateInventoryDto {
-    productId: number;
-    storeId: number;
-    code: string;
-    quantity: number;
-  }

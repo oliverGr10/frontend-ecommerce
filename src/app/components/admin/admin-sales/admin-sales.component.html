@@ -3,7 +3,11 @@
     <h1 class="text-2xl font-sans font-bold">Inventory</h1>
     <div class="flex items-center">
       <div class="relative mr-4">
-        <input type="text" placeholder="Search" class="pl-8 pr-3 font-sans py-2 border rounded-md w-64">
+        <input 
+          type="text" 
+          placeholder="Search" 
+          class="pl-8 pr-3 font-sans py-2 border rounded-md w-64"
+          (input)="searchTerm$.next($any($event.target).value)">
         <svg class="w-5 h-5 absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
         </svg>
@@ -13,13 +17,13 @@
           <line x1="12" y1="5" x2="12" y2="19" />
           <line x1="5" y1="12" x2="19" y2="12" />
         </svg>
-        Add to Iventory
+        Add to Inventory
       </button>
     </div>
   </div>
 
   <div class="bg-white rounded-lg shadow-md overflow-hidden border border-gray-200">
-    <h2 class="text-lg text-white font-sans font-semibold p-4 bg-[#1E293B] border-b border-gray-200">Iventory List</h2>
+    <h2 class="text-lg text-white font-sans font-semibold p-4 bg-[#1E293B] border-b border-gray-200">Inventory List</h2>
    
     <table class="w-full">
       <thead>
@@ -28,25 +32,37 @@
           <th class="px-6 py-3 text-xs font-medium text-gray-500 uppercase">Producto</th>
           <th class="px-6 py-3 text-xs font-medium text-gray-500 uppercase">Store</th>
           <th class="px-6 py-3 text-xs font-medium text-gray-500 uppercase">Code</th>
-          <th class="px-6 py-3 text-xs font-medium text-gray-500 uppercase">cantidad</th>
+          <th class="px-6 py-3 text-xs font-medium text-gray-500 uppercase">Cantidad</th>
+          <th class="px-6 py-3 text-xs font-medium text-gray-500 uppercase">Estado</th>
           <th class="px-6 py-3 text-xs font-medium text-gray-500 uppercase">Action</th>
         </tr>
       </thead>
       <tbody class="divide-y divide-gray-200">
-        <tr class="hover:bg-gray-50">
-          <td class="px-6 py-4">001</td>
-          <td class="px-6 py-4">Producto A</td>
-          <td class="px-6 py-4">almacen B</td>
-          <td class="px-6 py-4">000ab2</td>
-          <td class="px-6 py-4">Restock</td>
+        <tr *ngFor="let item of displayedInventory" class="hover:bg-gray-50">
+          <td class="px-6 py-4">{{item.id}}</td>
+          <td class="px-6 py-4">{{getProductName(item.productId)}}</td>
+          <td class="px-6 py-4">{{getStoreName(item.storeId)}}</td>
+          <td class="px-6 py-4">{{item.code}}</td>
+          <td class="px-6 py-4">{{ getDisplayQuantity(item) }}</td>
+          <td class="px-6 py-4">
+        <span [ngClass]="{
+            'px-2 py-1 rounded-full text-xs font-medium': true,
+            'bg-red-100 text-red-800': item.quantity === 0,
+            'bg-yellow-100 text-yellow-800': item.quantity > 0 && item.quantity < getProductMinStock(item.productId),
+            'bg-green-100 text-green-800': item.quantity >= getProductMinStock(item.productId),
+            'bg-gray-100 text-gray-800': !item.available
+        }">
+            {{getInventoryStatus(item)}}
+        </span>
+    </td>
           <td class="px-6 py-4">
             <div class="flex space-x-2">
-              <button (click)="openEditIventory()" class="text-black hover:text-green-700" title="Edit Supplier">
+              <button (click)="openEditIventory()" class="text-black hover:text-green-700" title="Edit Inventory">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                   <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
                 </svg>
               </button>
-              <button (click)="openDeleteIventory()"  class="text-black hover:text-red-700" title="Delete Supplier">
+              <button (click)="openDeleteIventory()" class="text-black hover:text-red-700" title="Delete Inventory">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                   <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd" />
                 </svg>
@@ -57,49 +73,37 @@
       </tbody>
     </table>
   </div>
+
   <div class="flex justify-center mt-6 mb-6">
     <nav class="inline-flex items-center rounded-xl overflow-hidden shadow-lg bg-white p-1.5 gap-1.5">
-      <!-- Botón Previous -->
-      <button class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-600 transition-all duration-200 ease-in-out rounded-lg hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed group">
-        <svg 
-          class="w-4 h-4 mr-2 transition-transform group-hover:-translate-x-0.5" 
-          fill="none" 
-          stroke="currentColor" 
-          viewBox="0 0 24 24"
-        >
+      <button 
+        [disabled]="currentPage === 1"
+        (click)="onPageChange(currentPage - 1)"
+        class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-600 transition-all duration-200 ease-in-out rounded-lg hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed group">
+        <svg class="w-4 h-4 mr-2 transition-transform group-hover:-translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"></path>
         </svg>
         Prev
       </button>
-  
-      <!-- Números de página -->
+
       <div class="flex items-center gap-1">
-        <button class="w-10 h-10 flex items-center justify-center rounded-lg text-sm font-semibold transition-all duration-200 ease-in-out bg-[#052339] text-white hover:bg-[#052339]/90">
-          1
-        </button>
-        <button class="w-10 h-10 flex items-center justify-center rounded-lg text-sm font-semibold transition-all duration-200 ease-in-out hover:bg-gray-100 text-gray-700">
-          2
-        </button>
-        <button class="w-10 h-10 flex items-center justify-center rounded-lg text-sm font-semibold transition-all duration-200 ease-in-out hover:bg-gray-100 text-gray-700">
-          3
-        </button>
-        <button class="w-10 h-10 flex items-center justify-center rounded-lg text-sm font-semibold transition-all duration-200 ease-in-out hover:bg-gray-100 text-gray-700">
-          4
-        </button>
-        <button class="w-10 h-10 flex items-center justify-center rounded-lg text-sm font-semibold transition-all duration-200 ease-in-out hover:bg-gray-100 text-gray-700">
-          5
-        </button>
+        <ng-container *ngFor="let page of [].constructor(totalPages); let i = index">
+          <button 
+            (click)="onPageChange(i + 1)"
+            [class]="currentPage === i + 1 ? 
+              'w-10 h-10 flex items-center justify-center rounded-lg text-sm font-semibold transition-all duration-200 ease-in-out bg-[#052339] text-white hover:bg-[#052339]/90' : 
+              'w-10 h-10 flex items-center justify-center rounded-lg text-sm font-semibold transition-all duration-200 ease-in-out hover:bg-gray-100 text-gray-700'">
+            {{i + 1}}
+          </button>
+        </ng-container>
       </div>
-  
-      <!-- Botón Next -->
-      <button class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-600 transition-all duration-200 ease-in-out rounded-lg hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed group">
+
+      <button 
+        [disabled]="currentPage === totalPages"
+        (click)="onPageChange(currentPage + 1)"
+        class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-600 transition-all duration-200 ease-in-out rounded-lg hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed group">
         Next
-        <svg 
-          class="w-4 h-4 ml-2 transition-transform group-hover:translate-x-0.5" 
-          fill="none" 
-          stroke="currentColor" 
-          viewBox="0 0 24 24"
-        >
+        <svg class="w-4 h-4 ml-2 transition-transform group-hover:translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"></path>
         </svg>
       </button>
