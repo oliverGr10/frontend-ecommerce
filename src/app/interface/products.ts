@@ -1,3 +1,5 @@
+import {Inventory} from "./inventory";
+
 export interface Product {
   id: number;
   name: string;
@@ -6,6 +8,7 @@ export interface Product {
   categoryId: number;
   supplierId: number;
   minStock?: number;
+  inventory?: Inventory[]
   images: ProductImage[];
   orders?: number;
 }
